@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "374172787469",
+    "firebase_url": "https://miss-you-e96ae.firebaseio.com",
+    "project_id": "miss-you-e96ae",
+    "storage_bucket": "miss-you-e96ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:374172787469:android:27960912b6f35a32730644",
+        "android_client_info": {
+          "package_name": "com.example.missyou"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "374172787469-s1c12febgnimdfqbbjf0v24ai52uup3e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.missyou",
+            "certificate_hash": "076c6e33dab9768df0925194121f19ced6880061"
+          }
+        },
+        {
+          "client_id": "374172787469-77g6kvrbob4bcort5gnb0v56jacm4tcu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBis-Le6T4YzLqHlbOoEyJB1SH2eO9mylw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "374172787469-77g6kvrbob4bcort5gnb0v56jacm4tcu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
