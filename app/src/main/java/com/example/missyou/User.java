@@ -1,10 +1,9 @@
 package com.example.missyou;
 
-/**
 
-* Created by Sue on 07/10/2019
-
-*/
+/*
+ * Created by Sue on 07/10/2019
+ * */
 
 public class User {
 

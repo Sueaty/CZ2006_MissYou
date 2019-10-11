@@ -1,8 +1,7 @@
-/**
 
+/*
  * Created by Sue on 07/10/2019
-
- */
+ * */
 
 package com.example.missyou;
 
