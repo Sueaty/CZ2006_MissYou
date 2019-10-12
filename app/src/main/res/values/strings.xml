@@ -9,4 +9,6 @@
     <string name="profile">profile</string>
     <string name="posts">posts</string>
     <string name="logout">Logout</string>
+    <string name="descriptions">Description</string>
+    <string name="go_newpost">New Post</string>
 </resources>

@@ -44,23 +44,37 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = inputEmail.getText().toString();
-                String password = inputPassword.getText().toString();
+                final String email = inputEmail.getText().toString();
+                final String password = inputPassword.getText().toString();
+                if(email.isEmpty()){
+                    inputEmail.setError("Please enter your email");
+                    inputEmail.requestFocus();
+                }
 
-                mFirebaseAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(!task.isSuccessful()){
-                                    Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
+
+
+               else if (password.isEmpty()){
+                    inputPassword.setError("You must enter your password");
+                    inputPassword.requestFocus();
+                }
+                else {
+                    mFirebaseAuth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if(!task.isSuccessful()){
+                                        Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
+                                    }
+                                    else{
+                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
                                 }
-                                else{
-                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            }
-                        });
+                            });
+
+                }
+
 
             }
         });

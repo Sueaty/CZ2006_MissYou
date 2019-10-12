@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private TextView tvSample;
     private Button btnLogout;
+    private Button btnnewpost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         tvSample = findViewById(R.id.tvSample);
         btnLogout = findViewById(R.id.btnLogout);
+        btnnewpost = findViewById(R.id.btnNewpost);
 
         // If the user is not logged in
         if (mFirebaseAuth.getCurrentUser() == null) {
@@ -44,13 +46,19 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
-        });
+       });
 
     }
 
     public void goSettings (View view) {
         // Do something in response to button
         Intent intent = new Intent(this,Settings.class);
+        startActivity(intent);
+    }
+
+    public void newPost (View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this,NewPost.class);
         startActivity(intent);
     }
 
