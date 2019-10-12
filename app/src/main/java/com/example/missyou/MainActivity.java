@@ -48,4 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void goSettings (View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this,Settings.class);
+        startActivity(intent);
+    }
+
+
 }

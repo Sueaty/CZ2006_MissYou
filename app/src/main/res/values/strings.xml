@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">MissYou</string>
+    <string name="view_profile">View</string>
+    <string name="my_profile">My Profile</string>
+    <string name="my_post">My Posts</string>
+    <string name="view_post">View</string>
+    <string name="settings">Settings</string>
+    <string name="go_settings">goSettings</string>
+    <string name="profile">profile</string>
+    <string name="posts">posts</string>
+    <string name="logout">Logout</string>
 </resources>
