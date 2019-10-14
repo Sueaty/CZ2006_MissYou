@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "374172787469-cru3me81fnci626u59es2blhf8h7v9ek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.missyou",
+            "certificate_hash": "eed7a15607a2921d703354444f609302a54723cb"
+          }
+        },
+        {
           "client_id": "374172787469-s1c12febgnimdfqbbjf0v24ai52uup3e.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
