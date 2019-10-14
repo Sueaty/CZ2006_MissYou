@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewPost">
+    tools:context=".NewPostActivity">
 
     <ImageView
         android:id="@+id/newPostImage"
         android:layout_width="401dp"
         android:layout_height="220dp"
         android:layout_marginTop="16dp"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +30,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newPostImage" />
+        app:layout_constraintTop_toBottomOf="@+id/newPostImage"
+        style="@style/Test" />
 
     <EditText
         android:id="@+id/yourPhone"
@@ -39,10 +41,10 @@
         android:ems="10"
         android:inputType="phone"
         android:hint="Your Phone"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/yourEmail" />
+        app:layout_constraintTop_toTopOf="@+id/yourEmail"
+        style="@style/Test" />
 
     <EditText
         android:id="@+id/yourAddress"
@@ -55,6 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/yourPhone"
+        style="@style/Test"
 
         />
 
@@ -73,7 +76,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/yourAddress"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        style="@style/Test"/>
 
     <Button
         android:id="@+id/btnnewpost"
@@ -85,7 +89,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descriptions"
-        app:layout_constraintVertical_bias="0.482" />
+        app:layout_constraintVertical_bias="0.482"
+        style="@style/Test"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

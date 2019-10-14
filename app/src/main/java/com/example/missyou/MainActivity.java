@@ -56,9 +56,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     public void newPost (View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this,NewPost.class);
+        //Do something in response to button
+        Intent intent = new Intent(this, NewPostActivity.class);
         startActivity(intent);
     }
 
