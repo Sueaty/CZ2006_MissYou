@@ -4,18 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewPost">
+    tools:context=".NewPostActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/newPostImage"
         android:layout_width="401dp"
         android:layout_height="220dp"
         android:layout_marginTop="16dp"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
 
-        tools:srcCompat="@tools:sample/avatars[14]" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/backgrounds/scenic[11]" />
 
     <EditText
         android:id="@+id/yourEmail"
@@ -28,7 +30,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/newPostImage"
+        style="@style/Test" />
 
     <EditText
         android:id="@+id/yourPhone"
@@ -38,13 +41,13 @@
         android:ems="10"
         android:inputType="phone"
         android:hint="Your Phone"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/yourEmail" />
+        app:layout_constraintTop_toTopOf="@+id/yourEmail"
+        style="@style/Test" />
 
     <EditText
-        android:id="@+id/your_address"
+        android:id="@+id/yourAddress"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginTop="50dp"
@@ -54,6 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/yourPhone"
+        style="@style/Test"
 
         />
 
@@ -65,13 +69,28 @@
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
+        android:hint="Add more description about your pet"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/your_address"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@id/yourAddress"
+        app:layout_constraintVertical_bias="0.0"
+        style="@style/Test"/>
+
+    <Button
+        android:id="@+id/btnnewpost"
+        android:layout_width="133dp"
+        android:layout_height="50dp"
+        android:text="Post"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptions"
+        app:layout_constraintVertical_bias="0.482"
+        style="@style/Test"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
