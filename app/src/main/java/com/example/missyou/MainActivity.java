@@ -38,9 +38,6 @@ public class MainActivity extends AppCompatActivity {
     private SettingsFragment settingsFragment;
 
     private FirebaseAuth mFirebaseAuth;
-    private TextView tvSample;
-    private Button btnLogout;
-    private Button btnnewpost;
     private FloatingActionButton drawer, reportLost, reportFound;
     private Boolean isReportOpen = false;
 
@@ -62,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
         lostFragment = new LostFragment();
         settingsFragment = new SettingsFragment();
 
-        btnLogout = findViewById(R.id.btnLogout);
-        btnnewpost = findViewById(R.id.btnNewpost);
         drawer = findViewById(R.id.floatingActionButton);
         reportLost = findViewById(R.id.lostReportButton);
         reportFound = findViewById(R.id.foundReportButton);
@@ -99,42 +94,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-//        drawer.setOnClickListener(new View.OnClickListener(){
-//            animation();
-//        });
-//        reportLost.setOnClickListener(this);
-//        reportFound.setOnClickListener(this);
-
         // If the user is not logged in
         if (mFirebaseAuth.getCurrentUser() == null) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
         }
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFirebaseAuth.signOut();
-                finish();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            }
-       });
-
     }
 
-
-    public void goSettings (View view) {
-        // Do something in response to button
-        Intent intent = new Intent(this,Settings.class);
-        startActivity(intent);
-    }
-
-
-    public void newPost (View view) {
-        //Do something in response to button
-        Intent intent = new Intent(this, NewPostActivity.class);
-        startActivity(intent);
-    }
 
     private void InitializeFragments(Fragment fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
