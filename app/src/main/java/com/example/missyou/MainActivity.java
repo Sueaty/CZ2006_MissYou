@@ -15,34 +15,43 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView navigation;
     FrameLayout frameLayout;
+    private Animation report_open, report_close;
 
     // Fragments
     private HomeFragment homeFragment;
     private LostFragment lostFragment;
-    private ReportFragment reportFragment;
     private SettingsFragment settingsFragment;
 
     private FirebaseAuth mFirebaseAuth;
     private TextView tvSample;
     private Button btnLogout;
     private Button btnnewpost;
+    private FloatingActionButton drawer, reportLost, reportFound;
+    private Boolean isReportOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        report_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.report_open);
+        report_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.report_close);
         mFirebaseAuth = FirebaseAuth.getInstance();
 
         navigation = findViewById(R.id.bottomNavigationView);
@@ -51,20 +60,20 @@ public class MainActivity extends AppCompatActivity {
         // fragment initialization
         homeFragment = new HomeFragment();
         lostFragment = new LostFragment();
-        reportFragment = new ReportFragment();
         settingsFragment = new SettingsFragment();
 
         btnLogout = findViewById(R.id.btnLogout);
         btnnewpost = findViewById(R.id.btnNewpost);
+        drawer = findViewById(R.id.floatingActionButton);
+        reportLost = findViewById(R.id.lostReportButton);
+        reportFound = findViewById(R.id.foundReportButton);
 
         InitializeFragments(homeFragment);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
                 // Switch to select which case is chosen :
                 switch (menuItem.getItemId()){
-
                     // code to be executed when single item is selected
                     case R.id.navigation_home :
                         InitializeFragments(homeFragment);
@@ -74,10 +83,6 @@ public class MainActivity extends AppCompatActivity {
                         InitializeFragments(lostFragment);
                         return true;
 
-                    case R.id.navigation_report:
-                        InitializeFragments(reportFragment);
-                        return true;
-
                     case R.id.navigation_settings:
                         InitializeFragments(settingsFragment);
                         return true;
@@ -85,6 +90,20 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        drawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                animation();
+            }
+        });
+
+
+//        drawer.setOnClickListener(new View.OnClickListener(){
+//            animation();
+//        });
+//        reportLost.setOnClickListener(this);
+//        reportFound.setOnClickListener(this);
 
         // If the user is not logged in
         if (mFirebaseAuth.getCurrentUser() == null) {
@@ -102,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
        });
 
     }
+
 
     public void goSettings (View view) {
         // Do something in response to button
@@ -122,5 +142,21 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit(); // save changes
     }
 
+    private void animation(){
+        if (isReportOpen){
+            reportFound.startAnimation(report_close);
+            reportLost.startAnimation(report_close);
+            reportFound.setClickable(false);
+            reportLost.setClickable(false);
+            isReportOpen = false;
+        }
+        else{
+            reportFound.startAnimation(report_open);
+            reportLost.startAnimation(report_open);
+            reportFound.setClickable(true);
+            reportLost.setClickable(true);
+            isReportOpen = true;
+        }
+    }
 
 }
