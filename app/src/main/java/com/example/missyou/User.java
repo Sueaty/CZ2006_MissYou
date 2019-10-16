@@ -7,7 +7,7 @@ package com.example.missyou;
 
 public class User {
 
-    public String name, email;
+    public String name, email, address, contact;
 
     public User(){
 
@@ -16,5 +16,7 @@ public class User {
     public User(String name, String email) {
         this.name = name;
         this.email = email;
+        this.address = address;
+        this.contact = contact;
     }
 }

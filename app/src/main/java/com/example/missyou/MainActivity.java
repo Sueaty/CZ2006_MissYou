@@ -17,10 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
     private FloatingActionButton drawer, reportLost, reportFound;
+    private TextView tvLost, tvFound;
     private Boolean isReportOpen = false;
 
     @Override
@@ -60,8 +59,10 @@ public class MainActivity extends AppCompatActivity {
         settingsFragment = new SettingsFragment();
 
         drawer = findViewById(R.id.floatingActionButton);
-        reportLost = findViewById(R.id.lostReportButton);
-        reportFound = findViewById(R.id.foundReportButton);
+        reportLost = findViewById(R.id.btnLostReport);
+        reportFound = findViewById(R.id.btnFoundReport);
+        tvLost= findViewById(R.id.tvLostReport);
+        tvFound = findViewById(R.id.tvFoundReport);
 
         InitializeFragments(homeFragment);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -112,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
         if (isReportOpen){
             reportFound.startAnimation(report_close);
             reportLost.startAnimation(report_close);
+            tvFound.startAnimation(report_close);
+            tvLost.startAnimation(report_close);
             reportFound.setClickable(false);
             reportLost.setClickable(false);
             isReportOpen = false;
@@ -119,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
         else{
             reportFound.startAnimation(report_open);
             reportLost.startAnimation(report_open);
+            tvFound.startAnimation(report_open);
+            tvLost.startAnimation(report_open );
             reportFound.setClickable(true);
             reportLost.setClickable(true);
             isReportOpen = true;
