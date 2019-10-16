@@ -50,9 +50,6 @@ public class LoginActivity extends AppCompatActivity {
                     inputEmail.setError("Please enter your email");
                     inputEmail.requestFocus();
                 }
-
-
-
                else if (password.isEmpty()){
                     inputPassword.setError("You must enter your password");
                     inputPassword.requestFocus();
