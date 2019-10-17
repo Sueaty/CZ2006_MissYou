@@ -8,30 +8,30 @@
 
     <ImageView
         android:id="@+id/newPostImage"
-        android:layout_width="401dp"
-        android:layout_height="220dp"
+        android:layout_width="395dp"
+        android:layout_height="199dp"
         android:layout_marginTop="16dp"
         android:scaleType="fitCenter"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/googleg_disabled_color_18"
         tools:srcCompat="@tools:sample/backgrounds/scenic[11]" />
 
     <EditText
         android:id="@+id/yourEmail"
+        style="@style/Test"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="60dp"
         android:ems="10"
         android:hint="Your Email"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newPostImage"
-        style="@style/Test" />
+        app:layout_constraintTop_toBottomOf="@+id/newPostImage" />
 
     <EditText
         android:id="@+id/yourPhone"
@@ -63,34 +63,34 @@
 
     <EditText
         android:id="@+id/descriptions"
-        android:layout_width="0dp"
-        android:layout_height="180dp"
+        style="@style/Test"
+        android:layout_width="403dp"
+        android:layout_height="152dp"
         android:layout_marginTop="74dp"
         android:ems="10"
         android:gravity="start|top"
-        android:inputType="textMultiLine"
         android:hint="Add more description about your pet"
 
+        android:inputType="textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/yourAddress"
-        app:layout_constraintVertical_bias="0.0"
-        style="@style/Test"/>
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/btnnewpost"
+        android:id="@+id/btnPost"
+        style="@style/Test"
         android:layout_width="133dp"
         android:layout_height="50dp"
-        android:text="Post"
+        android:text="@string/btnPost"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descriptions"
-        app:layout_constraintVertical_bias="0.482"
-        style="@style/Test"/>
+        app:layout_constraintVertical_bias="0.313" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

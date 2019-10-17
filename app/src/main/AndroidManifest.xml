@@ -18,7 +18,9 @@
         <activity android:name=".MyProfile" />
         <activity android:name=".UserRegisterActivity" />
         <activity android:name=".LoginActivity" />
+        <activity android:name=".NewPostActivity"/>
         <activity android:name=".MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
