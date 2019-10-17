@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvLost, tvFound;
     private Boolean isReportOpen = false;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,21 +89,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        drawer.setOnClickListener(new View.OnClickListener() {
+            drawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 animation();
             }
         });
 
-
         // If the user is not logged in
         if (mFirebaseAuth.getCurrentUser() == null) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
         }
-    }
+        reportLost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, NewPostActivity.class));
+                finish();
+            }
+        });
 
+        reportFound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent newPostIntent = new Intent(MainActivity.this, NewPostActivity.class);
+                startActivity(newPostIntent);
+                finish();
+            }
+        });
+
+    }
 
     private void InitializeFragments(Fragment fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
