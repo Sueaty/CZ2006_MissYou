@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, NewPostActivity.class));
-                finish();
+                //finish();
             }
         });
 
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent newPostIntent = new Intent(MainActivity.this, NewPostActivity.class);
                 startActivity(newPostIntent);
-                finish();
+                //finish();
             }
         });
 

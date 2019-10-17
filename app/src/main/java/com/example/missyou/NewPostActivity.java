@@ -3,6 +3,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -103,35 +104,47 @@ public class NewPostActivity extends AppCompatActivity{
                 compressedImageFile.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                 byte[] thumbData = baos.toByteArray(); */
 
-                UploadTask filePath = storageReference.child("post_images").child(randomName + ".jpg").putFile(postImageUri);
-                filePath.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                final StorageReference imageRef = storageReference.child("post_images").child(randomName + ".jpg");
+                final UploadTask filePath = imageRef.putFile(postImageUri);
+
+                filePath.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                      //  String downloadthumbUri = taskSnapshot.getDownloadUrl().toString();
-                        Map<String, Object> postMap = new HashMap<>();
-                        postMap.put("image_url", postImageUri);
-                        postMap.put("desc", Postdesc);
-                        postMap.put("Address",postadd);
-                        postMap.put("Email",postemail);
-                        postMap.put("Phone",postph);
-                        postMap.put("user_id", current_user_id);
-                        postMap.put("timestamp", FieldValue.serverTimestamp());
-
-                        firebaseFirestore.collection("Posts").add(postMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        //String downloadthumbUri = taskSnapshot.getDownloadUrl().toString();
+                        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
-                            public void onComplete(@NonNull Task<DocumentReference> task) {
-
-
-                                Toast.makeText(NewPostActivity.this, "Post was added", Toast.LENGTH_LONG).show();
-                                Intent mainIntent = new Intent(NewPostActivity.this, LoginActivity.class);
-                                startActivity(mainIntent);
-                                finish();
-
-
+                            public void onSuccess(Uri uri) {
+                                Map<String, Object> postMap = new HashMap<>();
+                                Log.e("IMAGE URL", uri.toString());
+                                postMap.put("image_url", uri.toString());
+                                postMap.put("desc", Postdesc);
+                                postMap.put("Address",postadd);
+                                postMap.put("Email",postemail);
+                                postMap.put("Phone",postph);
+                                postMap.put("user_id", current_user_id);
+                                postMap.put("timestamp", FieldValue.serverTimestamp());
+                                firebaseFirestore.collection("Posts").add(postMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        Log.e("ADD / SUCCESS", "Document ID is " + documentReference.getId());
+                                        Intent intent = new Intent(NewPostActivity.this, MainActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        finish();
+                                        startActivity(intent);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(NewPostActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                });
                             }
-
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(NewPostActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                            }
                         });
-
 
                     }
                 });
