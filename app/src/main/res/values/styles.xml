@@ -14,4 +14,10 @@
         <item name="android:layout_marginTop">30dp</item>
     </style>
 
+    <style name="SplashTheme" parent = "@android:style/Theme.Light.NoTitleBar">
+        <item name = "android:windowBackground">@drawable/loadingscreen</item>
+    </style>
+
+
+
 </resources>
