@@ -27,6 +27,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.1.0' // for Firebase authentication
     implementation 'com.google.firebase:firebase-database:19.1.0' // for Firebase database
     implementation 'com.google.firebase:firebase-storage:19.1.0'
+    implementation 'com.google.firebase:firebase-firestore:21.1.1' // for Firebase Storage
+    implementation 'com.google.firebase:firebase-core:17.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     testImplementation 'junit:junit:4.12'

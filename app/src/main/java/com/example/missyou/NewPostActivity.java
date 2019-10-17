@@ -34,7 +34,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
 import android.graphics.Bitmap;
-import id.zelory.compressor.Compressor;
+//import id.zelory.compressor.Compressor;
 
 import java.io.*;
 import java.io.File;
@@ -108,7 +108,7 @@ public class NewPostActivity extends AppCompatActivity{
 
                 final String randomName = UUID.randomUUID().toString();
 
-                File newThumbFile = new File(postImageUri.getPath());
+              /*  File newThumbFile = new File(postImageUri.getPath());
                try {
                     compressedImageFile = new Compressor (NewPostActivity.this)
                             .setMaxHeight(125)
@@ -117,7 +117,7 @@ public class NewPostActivity extends AppCompatActivity{
                             .compressToBitmap(newThumbFile);
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
+                } */
 
              /*   ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 compressedImageFile.compress(Bitmap.CompressFormat.JPEG, 100, baos);
