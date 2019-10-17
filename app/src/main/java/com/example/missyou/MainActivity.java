@@ -7,10 +7,12 @@
 package com.example.missyou;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -19,10 +21,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,9 +37,11 @@ public class MainActivity extends AppCompatActivity {
     // Fragments
     private HomeFragment homeFragment;
     private LostFragment lostFragment;
+    private CenterFragment mapFragment;
     private SettingsFragment settingsFragment;
 
     private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser currentUser;
     private FloatingActionButton drawer, reportLost, reportFound;
     private TextView tvLost, tvFound;
     private Boolean isReportOpen = false;
@@ -51,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         report_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.report_open);
         report_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.report_close);
         mFirebaseAuth = FirebaseAuth.getInstance();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         navigation = findViewById(R.id.bottomNavigationView);
         frameLayout = findViewById(R.id.frameLayout);
@@ -58,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         // fragment initialization
         homeFragment = new HomeFragment();
         lostFragment = new LostFragment();
+        mapFragment = new CenterFragment();
         settingsFragment = new SettingsFragment();
 
         drawer = findViewById(R.id.floatingActionButton);
@@ -65,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         reportFound = findViewById(R.id.btnFoundReport);
         tvLost= findViewById(R.id.tvLostReport);
         tvFound = findViewById(R.id.tvFoundReport);
+
 
         InitializeFragments(homeFragment);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -81,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
                         InitializeFragments(lostFragment);
                         return true;
 
+                    case R.id.navigation_map:
+                        InitializeFragments(mapFragment);
+                        return true;
+
                     case R.id.navigation_settings:
                         InitializeFragments(settingsFragment);
                         return true;
@@ -89,32 +102,58 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-            drawer.setOnClickListener(new View.OnClickListener() {
+
+        drawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 animation();
             }
         });
 
-        // If the user is not logged in
-        if (mFirebaseAuth.getCurrentUser() == null) {
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            finish();
-        }
+        final AlertDialog.Builder builder
+                = new AlertDialog.Builder(this)
+                .setTitle("Action Requires Registration")
+                .setMessage("Sign Up?")
+                .setIcon(R.drawable.ic_found_24px)
+                .setNegativeButton("Sign me UP", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(MainActivity.this, UserRegisterActivity.class));
+                    }
+                })
+                .setPositiveButton("No thanks!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MainActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
         reportLost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, NewPostActivity.class));
+                if (currentUser == null) {
+                    //startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    //finish();
+                    AlertDialog registerAlert = builder.create();
+                    registerAlert.show();
+
+                }
+                else startActivity(new Intent(MainActivity.this, NewPostActivity.class));
                 //finish();
             }
         });
 
         reportFound.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                Intent newPostIntent = new Intent(MainActivity.this, NewPostActivity.class);
-                startActivity(newPostIntent);
+            public void onClick(View view) {
+                if (currentUser == null) {
+                    //startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    //finish();
+                    AlertDialog registerAlert = builder.create();
+                    registerAlert.show();
+                }
+                else startActivity(new Intent(MainActivity.this, NewPostActivity.class));
                 //finish();
             }
         });
@@ -147,5 +186,4 @@ public class MainActivity extends AppCompatActivity {
             isReportOpen = true;
         }
     }
-
 }
