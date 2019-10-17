@@ -11,5 +11,12 @@
     <string name="logout">Logout</string>
     <string name="descriptions">Description</string>
     <string name="go_newpost">New Post</string>
-    <string name="btnPost">Post</string>
+    <string name="profile_editfinish">Done</string>
+    <string name="title_activity_pet_location_maps">PetLocationMap</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <!--
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    -->
 </resources>

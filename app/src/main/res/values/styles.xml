@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -13,5 +13,11 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">30dp</item>
     </style>
+
+    <style name="SplashTheme" parent = "@android:style/Theme.Light.NoTitleBar">
+        <item name = "android:windowBackground">@drawable/loadingscreen</item>
+    </style>
+
+
 
 </resources>
