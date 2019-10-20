@@ -7,16 +7,16 @@ package com.example.missyou;
 
 public class User {
 
-    public String name, email, address, contact;
+    public String name, email, phone, havePet;
 
     public User(){
 
     }
 
-    public User(String name, String email) {
+    public User(String name, String email, String phone, String havePet) {
         this.name = name;
         this.email = email;
-        this.address = address;
-        this.contact = contact;
+        this.phone = phone;
+        this.havePet = havePet;
     }
 }
