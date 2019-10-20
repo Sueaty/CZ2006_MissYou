@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         report_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.report_open);
         report_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.report_close);
         mFirebaseAuth = FirebaseAuth.getInstance();
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentUser = mFirebaseAuth.getCurrentUser();
 
         navigation = findViewById(R.id.bottomNavigationView);
         frameLayout = findViewById(R.id.frameLayout);
@@ -112,13 +112,13 @@ public class MainActivity extends AppCompatActivity {
 
         final AlertDialog.Builder builder
                 = new AlertDialog.Builder(this)
-                .setTitle("Action Requires Registration")
-                .setMessage("Sign Up?")
+                .setTitle("Action Requires Login")
+                .setMessage("Login??")
                 .setIcon(R.drawable.ic_found_24px)
-                .setNegativeButton("Sign me UP", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Login", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(MainActivity.this, UserRegisterActivity.class));
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     }
                 })
                 .setPositiveButton("No thanks!", new DialogInterface.OnClickListener() {
