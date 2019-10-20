@@ -36,7 +36,7 @@ public class UserRegisterActivity extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         inputName = findViewById(R.id.inputName);
-        inputEmail = findViewById(R.id.inputEmail);
+        inputEmail = findViewById(R.id.tvEmail);
         inputPassword = findViewById(R.id.inputPassword);
         btnSignUp = findViewById(R.id.btnSignUp);
 
@@ -46,6 +46,8 @@ public class UserRegisterActivity extends AppCompatActivity {
                 final String name = inputName.getText().toString();
                 final String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
+                final String phone = "";
+                final String havePet = "false";
 
                 if(name.isEmpty()){
                     inputName.setError("Please enter your name");
@@ -83,7 +85,9 @@ If all fields are filled, check if user's emil already  exists.
                                             public void onComplete(@NonNull Task<AuthResult> task) {
                                                 User user = new User(
                                                         name,
-                                                        email
+                                                        email,
+                                                        phone,
+                                                        havePet
                                                 );
                                                 FirebaseDatabase.getInstance().getReference("Users")
                                                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
