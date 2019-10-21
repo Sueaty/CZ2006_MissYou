@@ -21,6 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -121,6 +122,7 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
+
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,12 +139,6 @@ public class ProfileActivity extends AppCompatActivity {
                                 .setAspectRatio(1, 1)
                                 .start(ProfileActivity.this);
                     }
-                }
-                else{
-//                    CropImage.activity()
-//                            .setGuidelines(CropImageView.Guidelines.ON)
-//                            .setAspectRatio(1, 1)
-//                            .start(ProfileActivity.this);
                 }
             }
         });
