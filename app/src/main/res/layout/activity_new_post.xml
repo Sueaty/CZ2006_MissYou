@@ -35,29 +35,29 @@
 
     <EditText
         android:id="@+id/yourPhone"
+        style="@style/Test"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginTop="59dp"
         android:ems="10"
-        android:inputType="phone"
         android:hint="Your Phone"
+        android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/yourEmail"
-        style="@style/Test" />
+        app:layout_constraintTop_toTopOf="@+id/yourEmail" />
 
     <EditText
         android:id="@+id/yourAddress"
+        style="@style/Test"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginTop="50dp"
         android:ems="10"
+        android:hint="Location"
         android:inputType="text"
-        android:hint="Address"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/yourPhone"
-        style="@style/Test"
 
         />
 
@@ -91,6 +91,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descriptions"
         app:layout_constraintVertical_bias="0.313" />
+
+    <Button
+        android:id="@+id/toMap"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="310dp"
+        android:layout_marginTop="224dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="459dp"
+
+        android:text="Location"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,7 +28,10 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyD4MFozk1U2Z65_fJTugdtDTNtRKXdF63c" />
+
+
+
         <activity android:name=".SplashActivity"
             android:theme="@style/SplashTheme"
             android:screenOrientation="portrait">
@@ -55,4 +58,7 @@
         </activity>
     </application>
 
+
+
 </manifest>
+
