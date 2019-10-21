@@ -36,16 +36,14 @@ import java.util.UUID;
 
 
 
-public class NewPostActivity extends AppCompatActivity{
+public class  NewPostActivity extends AppCompatActivity{
     private ImageView newPostImage;
-    private EditText yourPhone;
-    private EditText yourAddress;
-    private EditText yourEmail;
-    private EditText yourDescription;
+    private EditText yourPhone, yourAddress, yourEmail, yourDescription;
     private Button btnPost;
     private final int PICK_IMAGE_REQUEST = 71;
     private StorageReference storageReference;
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser currentUser;
     private DatabaseReference databaseReference;
     private FirebaseFirestore firebaseFirestore;
     private Bitmap compressedImageFile;
@@ -70,12 +68,14 @@ public class NewPostActivity extends AppCompatActivity{
         firebaseAuth = FirebaseAuth.getInstance();
       //  mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        current_user_id = firebaseAuth.getCurrentUser().getUid();
+
+        currentUser = firebaseAuth.getCurrentUser();
+        current_user_id = currentUser.getUid();
 
 
         newPostImage = findViewById(R.id.newPostImage);
         yourAddress = findViewById(R.id.yourAddress);
-        yourEmail = findViewById(R.id.yourEmail);
+        //yourEmail = findViewById(R.id.yourEmail);
         yourPhone = findViewById(R.id.yourPhone);
         yourDescription = findViewById(R.id.descriptions);
         btnPost = findViewById(R.id.btnPost);
@@ -87,7 +87,8 @@ public class NewPostActivity extends AppCompatActivity{
                 File newImageFile = new File(postImageUri.getPath());
                 final String Postdesc = yourDescription.getText().toString();
                 final String postadd = yourAddress.getText().toString();
-                final String postemail = yourEmail.getText().toString();
+                //final String postemail = yourEmail.getText().toString();
+                final String postemail = currentUser.getEmail();
                 final String postph = yourPhone.getText().toString();
                 final String randomName = UUID.randomUUID().toString();
 
