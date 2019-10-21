@@ -5,13 +5,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.content.Intent;
-import android.content.ContentResolver;
-import com.google.android.gms.tasks.OnCompleteListener;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -28,7 +26,7 @@ import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
 import android.graphics.Bitmap;
 //import id.zelory.compressor.Compressor;
-import com.google.firebase.database.*;
+
 
 import java.io.File;
 import java.util.*;
@@ -46,16 +44,11 @@ public class NewPostActivity extends AppCompatActivity{
     private final int PICK_IMAGE_REQUEST = 71;
     private StorageReference storageReference;
     private FirebaseAuth firebaseAuth;
-    private DatabaseReference databaseReference;
     private FirebaseFirestore firebaseFirestore;
     private Bitmap compressedImageFile;
     private Uri postImageUri = null;
-    //private DataSnapshot dataSnapshot;
     private String current_user_id;
-    //private DatabaseReference mDatabase;
 
-  //  FirebaseUser user;
-   // String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +59,6 @@ public class NewPostActivity extends AppCompatActivity{
         storageReference = FirebaseStorage.getInstance().getReference();
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-      //  mDatabase = FirebaseDatabase.getInstance().getReference();
 
         current_user_id = firebaseAuth.getCurrentUser().getUid();
 
@@ -167,6 +159,7 @@ public class NewPostActivity extends AppCompatActivity{
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); // select multiple pic
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
         }
         @Override
@@ -179,13 +172,6 @@ public class NewPostActivity extends AppCompatActivity{
                 newPostImage.setImageURI(postImageUri);
             }
         }
-        private String getExtension (Uri uri)
-        {
-            ContentResolver cr = getContentResolver();
-            MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-            return mimeTypeMap.getExtensionFromMimeType(cr.getType(uri));
-        }
-
 
     }
 
