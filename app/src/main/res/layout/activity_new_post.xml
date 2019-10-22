@@ -46,6 +46,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/yourEmail" />
 
+
     <EditText
         android:id="@+id/yourAddress"
         style="@style/Test"
@@ -60,6 +61,12 @@
         app:layout_constraintTop_toTopOf="@+id/yourPhone"
 
         />
+
+
+
+
+
+
 
     <EditText
         android:id="@+id/descriptions"

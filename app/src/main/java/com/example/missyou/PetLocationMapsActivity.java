@@ -1,5 +1,4 @@
 package com.example.missyou;
-import android.*;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -8,8 +7,6 @@ import androidx.fragment.app.FragmentActivity;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationManager;
-import android.location.LocationProvider;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -24,6 +21,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.AutocompletePrediction;
+import com.google.android.gms.location.places.AutocompletePredictionBuffer;
+
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+
+
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -34,8 +38,8 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.PlaceDetectionClient;
-import com.google.android.gms.location.places.Places;
-//import com.google.android.libraries.places.api.Places;
+
+import com.google.android.libraries.places.api.Places;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.PlaceDetectionClient;
 
@@ -49,7 +53,9 @@ import com.google.android.libraries.places.compat.AutocompletePrediction;
 import com.google.android.libraries.places.compat.Place;
 import com.google.android.libraries.places.compat.PlaceBuffer;
 */
-import com.google.android.gms.location.places.Places;
+
+
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -62,12 +68,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import android.Manifest;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
 
 public class PetLocationMapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -86,8 +95,13 @@ public class PetLocationMapsActivity extends FragmentActivity implements OnMapRe
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final String TAG = "PetLocationMapsActivity";
 
+
+    private AutoCompleteTextView mAutocompleteTextView;
+
+
     //widgets
     private EditText mSearchText;
+    private ImageView mGps;
 
 
 
@@ -101,12 +115,15 @@ public class PetLocationMapsActivity extends FragmentActivity implements OnMapRe
         getLocationPermission();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-   mGeoDataClient = Places.getGeoDataClient(this, null);
+ //  mGeoDataClient = Places.getGeoDataClient(this, null);
         // Construct a PlaceDetectionClient.
-       mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
+     //  mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
     //    mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         mSearchText = (EditText) findViewById(R.id.input_search);
+        mGps = (ImageView) findViewById(R.id.ic_gps);
+
+        mAutocompleteTextView = (AutoCompleteTextView) findViewById(R.id.places_autocomplete_edit_text);
 
 //build the map
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -137,9 +154,17 @@ public class PetLocationMapsActivity extends FragmentActivity implements OnMapRe
             }
         });
 
+        mGps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG,"OnClick: clicked gps icon");
+                getDeviceLocation();
+            }
+        });
+
     }
 
-    private void geoLocate(){
+    public String geoLocate(){
         Log.d(TAG,"geoLocate: geolocating");
 
         String searchString = mSearchText.getText().toString();
@@ -161,12 +186,22 @@ public class PetLocationMapsActivity extends FragmentActivity implements OnMapRe
             Log.d(TAG, "geolocate: found a location: " + address.toString());
 
             moveCamera(new LatLng(address.getLatitude(),address.getLongitude()),DEFAULT_ZOOM,address.getAddressLine(0));
+        //firebase
 
+            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+            DatabaseReference databaseReference = firebaseDatabase.getReference("Locations");
+            //Instead of "Locations" you can say something else. Locations will be the name of your path where the location is stored.
+            //Create a Hashmap to store the information with a key and a value:
+            HashMap<String, String> values = new HashMap<>();
+            values.put("Locations", address.toString());
+            databaseReference.push().setValue(values);
 
         }
+        return list.get(0).toString();
+
 
     }
-    
+
     private void getDeviceLocation() {
 
         Log.d(TAG, "getDeviceLocation: getting the current device location");
@@ -203,7 +238,7 @@ public class PetLocationMapsActivity extends FragmentActivity implements OnMapRe
         }
     }
 
-    private void moveCamera(LatLng latLng , float zoom, String title){
+    public void moveCamera(LatLng latLng , float zoom, String title){
 
         Log.d(TAG,"moveCamera: moving the camera to: lat:" + latLng.latitude + ", long" + latLng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
@@ -215,6 +250,9 @@ public class PetLocationMapsActivity extends FragmentActivity implements OnMapRe
                 .position(latLng)
                 .title(title);
         mMap.addMarker(options);
+
+     //   return title;
+        //Toast.makeText(PetLocationMapsActivity.this, title, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -354,6 +392,10 @@ public void onRequestPermissionsResult(int requestCode,
     }
     updateLocationUI();
 }
+
+
+
+
 
 
 
