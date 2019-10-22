@@ -60,6 +60,8 @@ public class  NewPostActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
 
+        init();//Location button
+
 
         storageReference = FirebaseStorage.getInstance().getReference();
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -119,7 +121,7 @@ public class  NewPostActivity extends AppCompatActivity{
                                 Log.e("IMAGE URL", uri.toString());
                                 postMap.put("image_url", uri.toString());
                                 postMap.put("desc", Postdesc);
-                                postMap.put("Address",postadd);
+                                postMap.put("Location",postadd);
                                 postMap.put("Email",postemail);
                                 postMap.put("Phone",postph);
                                 postMap.put("user_id", current_user_id);
@@ -163,6 +165,8 @@ public class  NewPostActivity extends AppCompatActivity{
 
             }
         });
+
+
     }
         private void chooseImage() {
             Intent intent = new Intent();
@@ -180,6 +184,19 @@ public class  NewPostActivity extends AppCompatActivity{
                 newPostImage.setImageURI(postImageUri);
             }
         }
+        //button to open PetLocationMapsActivity
+private void init() {
+        Button toMap = (Button) findViewById(R.id.toMap);
+
+    toMap.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(NewPostActivity.this,  PetLocationMapsActivity.class);
+            startActivity(intent);
+        }
+    });
+}
+
         private String getExtension (Uri uri)
         {
             ContentResolver cr = getContentResolver();
