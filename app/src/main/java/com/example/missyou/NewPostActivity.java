@@ -52,8 +52,8 @@ public class  NewPostActivity extends AppCompatActivity{
     private String current_user_id;
     //private DatabaseReference mDatabase;
 
-  //  FirebaseUser user;
-   // String uid;
+    //  FirebaseUser user;
+    // String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class  NewPostActivity extends AppCompatActivity{
         storageReference = FirebaseStorage.getInstance().getReference();
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-      //  mDatabase = FirebaseDatabase.getInstance().getReference();
+        //  mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
         currentUser = firebaseAuth.getCurrentUser();
@@ -81,7 +81,7 @@ public class  NewPostActivity extends AppCompatActivity{
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // Intent intent = new Intent(NewPostActivity.this,MainActivity.class);  // jum to Main Activity
+                // Intent intent = new Intent(NewPostActivity.this,MainActivity.class);  // jum to Main Activity
                 File newImageFile = new File(postImageUri.getPath());
                 final String Postdesc = yourDescription.getText().toString();
                 final String postadd = yourAddress.getText().toString();
@@ -164,29 +164,28 @@ public class  NewPostActivity extends AppCompatActivity{
             }
         });
     }
-        private void chooseImage() {
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-        }
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-            if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                    && data != null && data.getData() != null )
-            {
-                postImageUri = data.getData();
-                newPostImage.setImageURI(postImageUri);
-            }
-        }
-        private String getExtension (Uri uri)
+    private void chooseImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null )
         {
-            ContentResolver cr = getContentResolver();
-            MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-            return mimeTypeMap.getExtensionFromMimeType(cr.getType(uri));
+            postImageUri = data.getData();
+            newPostImage.setImageURI(postImageUri);
         }
-
-
+    }
+    private String getExtension (Uri uri)
+    {
+        ContentResolver cr = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(cr.getType(uri));
     }
 
+
+}
