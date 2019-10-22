@@ -1,7 +1,5 @@
 package com.example.missyou;
-
 import android.*;
-
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -50,9 +48,6 @@ import com.google.android.libraries.places.compat.GeoDataClient;
 import com.google.android.libraries.places.compat.AutocompletePrediction;
 import com.google.android.libraries.places.compat.Place;
 import com.google.android.libraries.places.compat.PlaceBuffer;
-
-import com.google.android.libraries.places.compat.ui.PlacePicker;
-
 */
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -70,6 +65,10 @@ import com.google.android.gms.tasks.Task;
 
 import android.Manifest;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class PetLocationMapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -84,11 +83,15 @@ public class PetLocationMapsActivity extends FragmentActivity implements OnMapRe
     private GeoDataClient mGeoDataClient;
     private PlaceDetectionClient mPlaceDetectionClient;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-
-
-
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final String TAG = "PetLocationMapsActivity";
+
+    //widgets
+    private EditText mSearchText;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,13 +106,67 @@ public class PetLocationMapsActivity extends FragmentActivity implements OnMapRe
        mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
     //    mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
+        mSearchText = (EditText) findViewById(R.id.input_search);
 
 //build the map
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+
+
+
     }
 
+    private void init(){
+        Log.d(TAG,"init: initializing");
+
+        mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_DONE
+                        || keyEvent.getAction() == keyEvent.ACTION_DOWN
+                        || keyEvent.getAction() == keyEvent.KEYCODE_ENTER){
+                    //execute our method for searching
+
+                    geoLocate();//geolocate the search string you entered to search field
+
+            }
+                return false;
+            }
+        });
+
+    }
+
+    private void geoLocate(){
+        Log.d(TAG,"geoLocate: geolocating");
+
+        String searchString = mSearchText.getText().toString();
+
+        Geocoder geocoder = new Geocoder(PetLocationMapsActivity.this);
+
+        List<Address> list = new ArrayList<>();
+
+        try{
+            list = geocoder.getFromLocationName(searchString,1);
+        }catch( IOException e){
+            Log.e(TAG,"geolocate: IO Exception: " + e.getMessage());
+
+        }
+
+        if(list.size()>0) {//if we had result
+            Address address = list.get(0);
+
+            Log.d(TAG, "geolocate: found a location: " + address.toString());
+
+            moveCamera(new LatLng(address.getLatitude(),address.getLongitude()),DEFAULT_ZOOM,address.getAddressLine(0));
+
+
+        }
+
+    }
+    
     private void getDeviceLocation() {
 
         Log.d(TAG, "getDeviceLocation: getting the current device location");
@@ -146,10 +203,18 @@ public class PetLocationMapsActivity extends FragmentActivity implements OnMapRe
         }
     }
 
-    private void moveCamera(LatLng latLng , float zoom){
+    private void moveCamera(LatLng latLng , float zoom, String title){
 
         Log.d(TAG,"moveCamera: moving the camera to: lat:" + latLng.latitude + ", long" + latLng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
+
+
+        // to drop down a pin
+
+        MarkerOptions options = new MarkerOptions()
+                .position(latLng)
+                .title(title);
+        mMap.addMarker(options);
 
     }
 
@@ -177,7 +242,9 @@ public class PetLocationMapsActivity extends FragmentActivity implements OnMapRe
             getDeviceLocation();
 
             mMap.setMyLocationEnabled(true);
-
+            //gonna block location button with searchbar anyway, make it false
+            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+            init();
         }
 
 
