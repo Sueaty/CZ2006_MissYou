@@ -5,11 +5,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.content.Intent;
-
+import android.content.ContentResolver;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -26,7 +28,7 @@ import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
 import android.graphics.Bitmap;
 //import id.zelory.compressor.Compressor;
-
+import com.google.firebase.database.*;
 
 import java.io.File;
 import java.util.*;
@@ -34,38 +36,46 @@ import java.util.UUID;
 
 
 
-public class NewPostActivity extends AppCompatActivity{
+public class  NewPostActivity extends AppCompatActivity{
     private ImageView newPostImage;
-    private EditText yourPhone;
-    private EditText yourAddress;
-    private EditText yourEmail;
-    private EditText yourDescription;
+    private EditText yourPhone, yourAddress, yourEmail, yourDescription;
     private Button btnPost;
     private final int PICK_IMAGE_REQUEST = 71;
     private StorageReference storageReference;
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser currentUser;
+    private DatabaseReference databaseReference;
     private FirebaseFirestore firebaseFirestore;
     private Bitmap compressedImageFile;
     private Uri postImageUri = null;
+    //private DataSnapshot dataSnapshot;
     private String current_user_id;
+    //private DatabaseReference mDatabase;
 
+  //  FirebaseUser user;
+   // String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
 
+        init();//Location button
+
 
         storageReference = FirebaseStorage.getInstance().getReference();
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
+      //  mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        current_user_id = firebaseAuth.getCurrentUser().getUid();
+
+        currentUser = firebaseAuth.getCurrentUser();
+        current_user_id = currentUser.getUid();
 
 
         newPostImage = findViewById(R.id.newPostImage);
         yourAddress = findViewById(R.id.yourAddress);
-        yourEmail = findViewById(R.id.yourEmail);
+        //yourEmail = findViewById(R.id.yourEmail);
         yourPhone = findViewById(R.id.yourPhone);
         yourDescription = findViewById(R.id.descriptions);
         btnPost = findViewById(R.id.btnPost);
@@ -77,7 +87,8 @@ public class NewPostActivity extends AppCompatActivity{
                 File newImageFile = new File(postImageUri.getPath());
                 final String Postdesc = yourDescription.getText().toString();
                 final String postadd = yourAddress.getText().toString();
-                final String postemail = yourEmail.getText().toString();
+                //final String postemail = yourEmail.getText().toString();
+                final String postemail = currentUser.getEmail();
                 final String postph = yourPhone.getText().toString();
                 final String randomName = UUID.randomUUID().toString();
 
@@ -110,7 +121,7 @@ public class NewPostActivity extends AppCompatActivity{
                                 Log.e("IMAGE URL", uri.toString());
                                 postMap.put("image_url", uri.toString());
                                 postMap.put("desc", Postdesc);
-                                postMap.put("Address",postadd);
+                                postMap.put("Location",postadd);
                                 postMap.put("Email",postemail);
                                 postMap.put("Phone",postph);
                                 postMap.put("user_id", current_user_id);
@@ -154,12 +165,13 @@ public class NewPostActivity extends AppCompatActivity{
 
             }
         });
+
+
     }
         private void chooseImage() {
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); // select multiple pic
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
         }
         @Override
@@ -172,6 +184,26 @@ public class NewPostActivity extends AppCompatActivity{
                 newPostImage.setImageURI(postImageUri);
             }
         }
+        //button to open PetLocationMapsActivity
+private void init() {
+        Button toMap = (Button) findViewById(R.id.toMap);
+
+    toMap.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(NewPostActivity.this,  PetLocationMapsActivity.class);
+            startActivity(intent);
+        }
+    });
+}
+
+        private String getExtension (Uri uri)
+        {
+            ContentResolver cr = getContentResolver();
+            MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+            return mimeTypeMap.getExtensionFromMimeType(cr.getType(uri));
+        }
+
 
     }
 

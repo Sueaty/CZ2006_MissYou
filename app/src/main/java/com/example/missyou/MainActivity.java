@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         report_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.report_open);
         report_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.report_close);
         mFirebaseAuth = FirebaseAuth.getInstance();
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentUser = mFirebaseAuth.getCurrentUser();
 
         navigation = findViewById(R.id.bottomNavigationView);
         frameLayout = findViewById(R.id.frameLayout);
@@ -74,6 +74,23 @@ public class MainActivity extends AppCompatActivity {
         tvLost= findViewById(R.id.tvLostReport);
         tvFound = findViewById(R.id.tvFoundReport);
 
+        final AlertDialog.Builder builder
+                = new AlertDialog.Builder(this)
+                .setTitle("Action Requires Login")
+                .setMessage("Login??")
+                .setIcon(R.drawable.ic_found_24px)
+                .setNegativeButton("Login", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    }
+                })
+                .setPositiveButton("No thanks!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(MainActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
         InitializeFragments(homeFragment);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -95,7 +112,13 @@ public class MainActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.navigation_settings:
-                        InitializeFragments(settingsFragment);
+                        if(currentUser == null){
+                            AlertDialog registerAlert = builder.create();
+                            registerAlert.show();
+                        }
+                        else{
+                            InitializeFragments(settingsFragment);
+                        }
                         return true;
                 }
                 return false;
@@ -109,24 +132,6 @@ public class MainActivity extends AppCompatActivity {
                 animation();
             }
         });
-
-        final AlertDialog.Builder builder
-                = new AlertDialog.Builder(this)
-                .setTitle("Action Requires Registration")
-                .setMessage("Sign Up?")
-                .setIcon(R.drawable.ic_found_24px)
-                .setNegativeButton("Sign me UP", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(MainActivity.this, UserRegisterActivity.class));
-                    }
-                })
-                .setPositiveButton("No thanks!", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(MainActivity.this, "Canceled", Toast.LENGTH_SHORT).show();
-                    }
-                });
 
 
         reportLost.setOnClickListener(new View.OnClickListener() {
