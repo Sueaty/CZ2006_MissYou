@@ -52,19 +52,21 @@ public class  NewPostActivity extends AppCompatActivity{
     private String current_user_id;
     //private DatabaseReference mDatabase;
 
-    //  FirebaseUser user;
-    // String uid;
+  //  FirebaseUser user;
+   // String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
 
+        init();//Location button
+
 
         storageReference = FirebaseStorage.getInstance().getReference();
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-        //  mDatabase = FirebaseDatabase.getInstance().getReference();
+      //  mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
         currentUser = firebaseAuth.getCurrentUser();
@@ -81,7 +83,7 @@ public class  NewPostActivity extends AppCompatActivity{
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Intent intent = new Intent(NewPostActivity.this,MainActivity.class);  // jum to Main Activity
+               // Intent intent = new Intent(NewPostActivity.this,MainActivity.class);  // jum to Main Activity
                 File newImageFile = new File(postImageUri.getPath());
                 final String Postdesc = yourDescription.getText().toString();
                 final String postadd = yourAddress.getText().toString();
@@ -119,7 +121,7 @@ public class  NewPostActivity extends AppCompatActivity{
                                 Log.e("IMAGE URL", uri.toString());
                                 postMap.put("image_url", uri.toString());
                                 postMap.put("desc", Postdesc);
-                                postMap.put("Address",postadd);
+                                postMap.put("Location",postadd);
                                 postMap.put("Email",postemail);
                                 postMap.put("Phone",postph);
                                 postMap.put("user_id", current_user_id);
@@ -163,29 +165,45 @@ public class  NewPostActivity extends AppCompatActivity{
 
             }
         });
+
+
     }
-    private void chooseImage() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null )
-        {
-            postImageUri = data.getData();
-            newPostImage.setImageURI(postImageUri);
+        private void chooseImage() {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
         }
-    }
-    private String getExtension (Uri uri)
-    {
-        ContentResolver cr = getContentResolver();
-        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-        return mimeTypeMap.getExtensionFromMimeType(cr.getType(uri));
-    }
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                    && data != null && data.getData() != null )
+            {
+                postImageUri = data.getData();
+                newPostImage.setImageURI(postImageUri);
+            }
+        }
+        //button to open PetLocationMapsActivity
+private void init() {
+        Button toMap = (Button) findViewById(R.id.toMap);
 
-
+    toMap.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(NewPostActivity.this,  PetLocationMapsActivity.class);
+            startActivity(intent);
+        }
+    });
 }
+
+        private String getExtension (Uri uri)
+        {
+            ContentResolver cr = getContentResolver();
+            MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+            return mimeTypeMap.getExtensionFromMimeType(cr.getType(uri));
+        }
+
+
+    }
+
