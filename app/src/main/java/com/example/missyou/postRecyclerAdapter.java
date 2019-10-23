@@ -1,30 +1,40 @@
 package com.example.missyou;
 
 
+import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
-//import androidx.annotation.NonNull;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
+
+import java.util.Date;
 import java.util.List;
 import android.content.Context;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import android.widget.TextView;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class postRecyclerAdapter extends RecyclerView.Adapter<postRecyclerAdapter.ViewHolder> {
     public List<userpost>post_list;
     public Context context;
     private TextView descView;
+    private TextView userHp;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
     private View mView;
     private ImageView blogImageView;
+
 
 
     public postRecyclerAdapter(List<userpost>post_list){
@@ -45,17 +55,57 @@ public class postRecyclerAdapter extends RecyclerView.Adapter<postRecyclerAdapte
 
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.setIsRecyclable(false);
 
         String desc_data = post_list.get(position).getDesc();
         holder.setDescText(desc_data);
 
+        String user_phone = post_list.get(position).getUser_phone();
+        holder.setPost_hp(user_phone);
+
         String image_url = post_list.get(position).getImage_url();
         String thumbUri = post_list.get(position).getImage_thumb();
         holder.setBlogImage(image_url, thumbUri);
 
+
         String user_id = post_list.get(position).getUser_id();
+        //User Data will be retrieved here...
+        firebaseFirestore.collection("Users").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                if(task.isSuccessful()){
+
+                    String userName = task.getResult().getString("name");
+                    String userImage = task.getResult().getString("image");
+
+                    holder.setUserData(userName, userImage);
+
+
+                } else {
+
+                    //Firebase Exception
+                    System.out.println("Requested entity was not found");
+
+                }
+
+            }
+        });
+
+
+
+
+        // get time display in post
+        try {
+            long millisecond = post_list.get(position).getTimestamp().getTime();
+            String dateString = DateFormat.format("MM/dd/yyyy", new Date(millisecond)).toString();
+            holder.setTime(dateString);
+        } catch (Exception e) {
+
+            Toast.makeText(context, "Exception : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }
 
 
 
@@ -73,9 +123,10 @@ public class postRecyclerAdapter extends RecyclerView.Adapter<postRecyclerAdapte
         private TextView post_des; //descView
         private ImageView post_img; //blogImageView
         private TextView post_date; //blogDate
+        private TextView post_hp;
 
-        private TextView user_name;  //blogUserName
-        private ImageView profile_pic; //blogUserImage
+        private TextView username;  //blogUserName
+        private ImageView profilepic; //blogUserImage
 
 
         public ViewHolder(View itemView) {
@@ -92,12 +143,17 @@ public class postRecyclerAdapter extends RecyclerView.Adapter<postRecyclerAdapte
 
         }
 
+        public void setPost_hp (String post_hp)
+        {
+            userHp= mView.findViewById(R.id.post_hp);
+            userHp.setText(post_hp);
+        }
+
         public void setBlogImage(String downloadUri, String thumbUri){
 
             blogImageView = mView.findViewById(R.id.post_img);
 
             RequestOptions requestOptions = new RequestOptions();
-            //requestOptions.placeholder(R.drawable.image_placeholder);
 
             Glide.with(context).applyDefaultRequestOptions(requestOptions).load(downloadUri).thumbnail(
                     Glide.with(context).load(thumbUri)
@@ -105,6 +161,26 @@ public class postRecyclerAdapter extends RecyclerView.Adapter<postRecyclerAdapte
 
         }
 
+        public void setTime(String date) {
+
+            post_date = mView.findViewById(R.id.post_date);
+            post_date.setText(date);
+
+        }
+
+        public void setUserData(String name, String image){   // user profile pic and name
+
+            profilepic= mView.findViewById(R.id.profile_pic);
+            username = mView.findViewById(R.id.user_name);
+
+            username.setText(name);
+
+            RequestOptions placeholderOption = new RequestOptions();
+            placeholderOption.placeholder(R.drawable.default_profile_image);
+
+            Glide.with(context).applyDefaultRequestOptions(placeholderOption).load(image).into(profilepic);
+
+        }
     }
 
 

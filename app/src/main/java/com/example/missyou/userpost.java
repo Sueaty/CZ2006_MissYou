@@ -8,20 +8,37 @@ public class userpost {
     public String image_url;
     public String desc; //desc
     public String image_thumb;
+    public String user_phone;
+
+
     public Date timestamp;
 
-    public userpost(String user_id, String image_url, String desc, String image_thumb, Date timestamp) {
+
+
+    // constractor
+    public userpost(String user_id, String image_url, String desc, String image_thumb, String Phone, Date timestamp) {
         this.user_id = user_id;
         this.image_url = image_url;
         this.desc = desc;
         this.image_thumb = image_thumb;
         this.timestamp = timestamp;
+        this.user_phone = user_phone;
     }
 
 
 
-
     public userpost(){};
+
+    // Geter and Setter++++++++
+
+    public String getUser_phone() {
+        return user_phone;
+    }
+
+    public void setUser_phone(String user_phone) {
+        this.user_phone = user_phone;
+    }
+
 
     public String getUser_id() {
         return user_id;
@@ -62,6 +79,8 @@ public class userpost {
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
+
+
 
 
 }
