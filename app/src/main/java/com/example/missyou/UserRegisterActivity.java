@@ -10,24 +10,41 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.UploadTask;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserRegisterActivity extends AppCompatActivity {
 
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseFirestore firebaseFirestore;
+
     private EditText inputName, inputEmail, inputPassword;
     private Button btnSignUp;
-    private FirebaseAuth mFirebaseAuth;
+
+    private FirebaseUser currentUser;
+    private String currentUserUID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +52,8 @@ public class UserRegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_register);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         inputName = findViewById(R.id.inputName);
         inputEmail = findViewById(R.id.tvEmail);
         inputPassword = findViewById(R.id.inputPassword);
@@ -46,8 +65,6 @@ public class UserRegisterActivity extends AppCompatActivity {
                 final String name = inputName.getText().toString();
                 final String email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
-                final String phone = "";
-                final String havePet = "false";
 
                 if(name.isEmpty()){
                     inputName.setError("Please enter your name");
@@ -83,29 +100,28 @@ If all fields are filled, check if user's emil already  exists.
                                         .addOnCompleteListener(UserRegisterActivity.this, new OnCompleteListener<AuthResult>() {
                                             @Override
                                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                                User user = new User(
-                                                        name,
-                                                        email,
-                                                        phone,
-                                                        havePet
-                                                );
-                                                FirebaseDatabase.getInstance().getReference("Users")
-                                                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                                        .setValue(user)
-                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                if(!task.isSuccessful()){
-                                                                    Toast.makeText(UserRegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                                                }
-                                                                else{
-                                                                    startActivity(new Intent(UserRegisterActivity.this, MainActivity.class));
-                                                                }
-                                                            }
-                                                        });
+
+                                                HashMap<String, String> userInfo = new HashMap<>();
+                                                userInfo.put("name", name);
+                                                userInfo.put("phone", "");
+                                                userInfo.put("email", email);
+                                                userInfo.put("havePet","false");
+                                                userInfo.put("image", "");
+
+                                                currentUser = mFirebaseAuth.getCurrentUser();
+                                                currentUserUID = currentUser.getUid();
+                                                firebaseFirestore.collection("Users").document(currentUserUID).set(userInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        startActivity(new Intent(UserRegisterActivity.this, MainActivity.class));
+                                                        finish();
+                                                    }
+                                                });
+
                                             }
                                         });
                             }
+
                             // If email does exist
                             else{
                                 inputEmail.setError("Email Already Exists!");
@@ -122,6 +138,7 @@ If all fields are filled, check if user's emil already  exists.
             }
         });
     }
+
 }
 
 
