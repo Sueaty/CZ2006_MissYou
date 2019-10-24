@@ -91,10 +91,12 @@ public class  NewPostActivity extends AppCompatActivity{
                // Intent intent = new Intent(NewPostActivity.this,MainActivity.class);  // jum to Main Activity
                 File newImageFile = new File(postImageUri.getPath());
                 final String Postdesc = yourDescription.getText().toString();
-                final String postadd = yourAddress.getText().toString();
+               final String postadd = yourAddress.getText().toString();
 
-          //       PetLocationMapsActivity petLoc = new PetLocationMapsActivity();
-           //      final String postadd2 = petLoc.geoLocate();
+               PetLocationMapsActivity petLoc = new PetLocationMapsActivity();
+                 final String postadd2 = petLoc.geoLocate();
+
+             //   Toast.makeText(NewPostActivity.this, postadd2, Toast.LENGTH_SHORT).show();
 
                 //final String postemail = yourEmail.getText().toString();
                 final String postemail = currentUser.getEmail();
@@ -131,6 +133,7 @@ public class  NewPostActivity extends AppCompatActivity{
                                 postMap.put("image_url", uri.toString());
                                 postMap.put("desc", Postdesc);
                                 postMap.put("Location",postadd);
+                                postMap.put("Location",postadd2);
                                 postMap.put("Email",postemail);
                                 postMap.put("Phone",postph);
                                 postMap.put("user_id", current_user_id);

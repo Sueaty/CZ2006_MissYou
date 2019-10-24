@@ -44,18 +44,6 @@ import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.PlaceDetectionClient;
 
 
-/*
-import com.google.android.libraries.places.compat.Place;
-import com.google.android.libraries.places.compat.AutocompletePredictionBufferResponse;
-import com.google.android.libraries.places.compat.GeoDataClient;
-
-import com.google.android.libraries.places.compat.AutocompletePrediction;
-import com.google.android.libraries.places.compat.Place;
-import com.google.android.libraries.places.compat.PlaceBuffer;
-*/
-
-
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -392,19 +380,6 @@ public void onRequestPermissionsResult(int requestCode,
     }
     updateLocationUI();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

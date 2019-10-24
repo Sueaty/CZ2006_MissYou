@@ -16,7 +16,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/googleg_disabled_color_18"
+
+        app:srcCompat="@drawable/path"
         tools:srcCompat="@tools:sample/backgrounds/scenic[11]" />
 
     <EditText
@@ -61,10 +62,6 @@
         app:layout_constraintTop_toTopOf="@+id/yourPhone"
 
         />
-
-
-
-
 
 
 
