@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.content.Intent;
 import android.content.ContentResolver;
+
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,6 +26,8 @@ import com.google.firebase.storage.UploadTask;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import android.widget.TextView;
 import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
 import android.graphics.Bitmap;
@@ -74,7 +78,8 @@ public class  NewPostActivity extends AppCompatActivity{
 
 
         newPostImage = findViewById(R.id.newPostImage);
-        yourAddress = findViewById(R.id.yourAddress);
+         yourAddress = findViewById(R.id.yourAddress);
+
         //yourEmail = findViewById(R.id.yourEmail);
         yourPhone = findViewById(R.id.yourPhone);
         yourDescription = findViewById(R.id.descriptions);
@@ -86,7 +91,13 @@ public class  NewPostActivity extends AppCompatActivity{
                // Intent intent = new Intent(NewPostActivity.this,MainActivity.class);  // jum to Main Activity
                 File newImageFile = new File(postImageUri.getPath());
                 final String Postdesc = yourDescription.getText().toString();
-                final String postadd = yourAddress.getText().toString();
+               final String postadd = yourAddress.getText().toString();
+
+               PetLocationMapsActivity petLoc = new PetLocationMapsActivity();
+                 final String postadd2 = petLoc.geoLocate();
+
+             //   Toast.makeText(NewPostActivity.this, postadd2, Toast.LENGTH_SHORT).show();
+
                 //final String postemail = yourEmail.getText().toString();
                 final String postemail = currentUser.getEmail();
                 final String postph = yourPhone.getText().toString();
@@ -122,6 +133,7 @@ public class  NewPostActivity extends AppCompatActivity{
                                 postMap.put("image_url", uri.toString());
                                 postMap.put("desc", Postdesc);
                                 postMap.put("Location",postadd);
+                                postMap.put("Location",postadd2);
                                 postMap.put("Email",postemail);
                                 postMap.put("Phone",postph);
                                 postMap.put("user_id", current_user_id);
