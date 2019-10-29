@@ -1,6 +1,10 @@
 package com.example.missyou;
+import com.example.missyou.PetLocationMapsActivity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,14 +39,17 @@ import android.graphics.Bitmap;
 import com.google.firebase.database.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.UUID;
 
 
-
 public class  NewPostActivity extends AppCompatActivity{
     private ImageView newPostImage;
-    private EditText yourPhone, yourAddress, yourEmail, yourDescription;
+    private EditText yourPhone, yourEmail, yourDescription;
+    private TextView yourAddress;
+    Map<String, Object> postMap;
+    String locationText;
     private Button btnPost;
     private final int PICK_IMAGE_REQUEST = 71;
     private StorageReference storageReference;
@@ -54,10 +61,57 @@ public class  NewPostActivity extends AppCompatActivity{
     private Uri postImageUri = null;
     //private DataSnapshot dataSnapshot;
     private String current_user_id;
+
+    public double longitude = 0.0;
+    public double latitude = 0.0;
     //private DatabaseReference mDatabase;
 
-  //  FirebaseUser user;
+    private EditText mSearchText;
+
+
+
+
+    //  FirebaseUser user;
    // String uid;
+  public  double[] geoLocate(){
+
+      mSearchText = (EditText) findViewById(R.id.input_search);
+
+      String searchString = mSearchText.getText().toString();
+     // Log.d(TAG,"geoLocate: geolocating");
+
+      Geocoder geocoder = new Geocoder(NewPostActivity.this);
+
+      List<Address> list = new ArrayList<>();
+
+      try{
+          list = geocoder.getFromLocationName(searchString,1);
+      }catch( IOException e){
+       //   Log.e(TAG,"geolocate: IO Exception: " + e.getMessage());
+
+      }
+
+      // if(list.size()>0) {//if we had result
+      final Address address = list.get(0);
+
+   //   Log.d(TAG, "geolocate: found a location: " + address.toString());
+
+    //  moveCamera(new LatLng(address.getLatitude(),address.getLongitude()),DEFAULT_ZOOM,address.getAddressLine(0));
+
+      double locationAry[] = new double[2];
+      locationAry[0] = address.getLatitude();
+      locationAry[1] = address.getLongitude();
+
+
+      latitude = address.getLatitude();
+      longitude = address.getLongitude();
+
+
+
+      return locationAry;
+
+  }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +132,11 @@ public class  NewPostActivity extends AppCompatActivity{
 
 
         newPostImage = findViewById(R.id.newPostImage);
-         yourAddress = findViewById(R.id.yourAddress);
+
+        //type textview
+      //  yourAddress =  findViewById(R.id.yourAddress);
+
+      //yourAddress = yourAddress.setText(postadd);
 
         //yourEmail = findViewById(R.id.yourEmail);
         yourPhone = findViewById(R.id.yourPhone);
@@ -91,14 +149,14 @@ public class  NewPostActivity extends AppCompatActivity{
                // Intent intent = new Intent(NewPostActivity.this,MainActivity.class);  // jum to Main Activity
                 File newImageFile = new File(postImageUri.getPath());
                 final String Postdesc = yourDescription.getText().toString();
-               final String postadd = yourAddress.getText().toString();
 
-               PetLocationMapsActivity petLoc = new PetLocationMapsActivity();
-                 final String postadd2 = petLoc.geoLocate();
+            //    final String postadd = yourAddress.getText().toString();
 
-             //   Toast.makeText(NewPostActivity.this, postadd2, Toast.LENGTH_SHORT).show();
+              //   yourAddress.setText(postadd);
+            //   yourAddress.setText(getAddress());
 
-                //final String postemail = yourEmail.getText().toString();
+
+                // final String postemail = yourEmail.getText().toString();a
                 final String postemail = currentUser.getEmail();
                 final String postph = yourPhone.getText().toString();
                 final String randomName = UUID.randomUUID().toString();
@@ -118,6 +176,7 @@ public class  NewPostActivity extends AppCompatActivity{
                 compressedImageFile.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                 byte[] thumbData = baos.toByteArray(); */
 
+
                 final StorageReference imageRef = storageReference.child("post_images").child(randomName + ".jpg");
                 final UploadTask filePath = imageRef.putFile(postImageUri);
 
@@ -128,12 +187,27 @@ public class  NewPostActivity extends AppCompatActivity{
                         imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                Map<String, Object> postMap = new HashMap<>();
+                                postMap = new HashMap<>();
+                            //    PetLocationMapsActivity loc = new PetLocationMapsActivity();
+
+
+                               latitude = (double) geoLocate()[0];
+                               longitude = (double) geoLocate()[1];
+
+                             //   latitude = loc.latitude;
+                               // longitude = loc.longitude;
+
+
                                 Log.e("IMAGE URL", uri.toString());
                                 postMap.put("image_url", uri.toString());
                                 postMap.put("desc", Postdesc);
-                                postMap.put("Location",postadd);
-                                postMap.put("Location",postadd2);
+                               //  postMap.put("Location",postadd);
+
+                              //  loc.geoLocate();
+
+                                postMap.put("Latitude", latitude);
+                                postMap.put("Longitude",longitude );
+
                                 postMap.put("Email",postemail);
                                 postMap.put("Phone",postph);
                                 postMap.put("user_id", current_user_id);

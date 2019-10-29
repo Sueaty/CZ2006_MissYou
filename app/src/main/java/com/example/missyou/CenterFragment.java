@@ -222,11 +222,9 @@ public class CenterFragment extends Fragment implements OnMapReadyCallback{
         //    init();
         }
 
-
-
         // Add a marker in Sydney and move the camera
         LatLng Singapore_Turf_Club_Equine_Hospital = new LatLng(1.422055, 103.764182);
-        mMap.addMarker(new MarkerOptions().position(Singapore_Turf_Club_Equine_Hospital).title("Singapore_Turf_Club_Equine_Hospital"));
+        mMap.addMarker(new MarkerOptions().position(Singapore_Turf_Club_Equine_Hospital).title("Singapore Turf Club Equine Hospital"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(Singapore_Turf_Club_Equine_Hospital));
 
 
@@ -235,8 +233,6 @@ public class CenterFragment extends Fragment implements OnMapReadyCallback{
 
         LatLng Amber_Vet = new LatLng( 1.312724, 103.922682);
         mMap.addMarker(new MarkerOptions().position(Amber_Vet).title("Amber Vet"));
-
-
 
     }
 
