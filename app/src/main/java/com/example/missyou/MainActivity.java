@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         report_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.report_open);
         report_close = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.report_close);
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -138,14 +137,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (currentUser == null) {
-                    //startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                    //finish();
+
                     AlertDialog registerAlert = builder.create();
                     registerAlert.show();
 
                 }
                 else startActivity(new Intent(MainActivity.this, NewPostActivity.class));
-                //finish();
             }
         });
 
