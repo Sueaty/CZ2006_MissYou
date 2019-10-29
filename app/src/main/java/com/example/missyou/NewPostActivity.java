@@ -10,12 +10,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.content.Intent;
 import android.content.ContentResolver;
-
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -31,6 +38,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.ByteArrayOutputStream;
@@ -66,8 +74,8 @@ public class  NewPostActivity extends AppCompatActivity{
     public double latitude = 0.0;
     //private DatabaseReference mDatabase;
 
-    private EditText mSearchText;
-
+    private AutoCompleteTextView mSearchText;
+    public PlaceAutocomplete placeAutocomplete;
 
 
 
@@ -75,7 +83,11 @@ public class  NewPostActivity extends AppCompatActivity{
    // String uid;
   public  double[] geoLocate(){
 
-      mSearchText = (EditText) findViewById(R.id.input_search);
+
+
+
+
+      mSearchText = (AutoCompleteTextView) findViewById(R.id.input_search);
 
       String searchString = mSearchText.getText().toString();
      // Log.d(TAG,"geoLocate: geolocating");
@@ -105,6 +117,14 @@ public class  NewPostActivity extends AppCompatActivity{
 
       latitude = address.getLatitude();
       longitude = address.getLongitude();
+
+      //place autocomplete
+
+
+
+
+
+
 
 
 

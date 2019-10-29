@@ -6,6 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".NewPostActivity">
 
+
+
+
     <ImageView
         android:id="@+id/newPostImage"
         android:layout_width="395dp"

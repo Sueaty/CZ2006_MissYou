@@ -57,6 +57,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
@@ -73,7 +74,6 @@ import java.util.HashMap;
 public class PetLocationMapsActivity extends FragmentActivity implements OnMapReadyCallback, OnInfoWindowClickListener {
 
     private GoogleMap mMap;
-
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final float DEFAULT_ZOOM = 15f;
@@ -90,6 +90,7 @@ public class PetLocationMapsActivity extends FragmentActivity implements OnMapRe
     public double longitude;
 
     private AutoCompleteTextView mAutocompleteTextView;
+    private PlaceAutocomplete placeAutocomplete;
 
 
     //widgets

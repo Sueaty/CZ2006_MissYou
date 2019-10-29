@@ -36,12 +36,12 @@ public class postRecyclerAdapter extends RecyclerView.Adapter<postRecyclerAdapte
     private ImageView blogImageView;
 
 
-
     public postRecyclerAdapter(List<userpost>post_list){
         this.post_list = post_list;
 
     }
 
+    
 
 
     @Override
