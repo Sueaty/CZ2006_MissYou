@@ -14,17 +14,21 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="434dp">
-
+            android:layout_width="410dp"
+            android:layout_height="435dp"
+            android:background="@drawable/backgroundpost"
+            android:visibility="visible"
+            >
             <ImageView
                 android:id="@+id/profile_pic"
-                android:layout_width="85dp"
-                android:layout_height="80dp"
+                android:layout_width="65dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:padding="3dp"
+                android:scaleType="fitCenter"
                 app:srcCompat="@drawable/default_profile_image" />
 
             <TextView
@@ -32,7 +36,7 @@
                 android:layout_width="133dp"
                 android:layout_height="34dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="TextView"
                 app:layout_constraintStart_toEndOf="@+id/profile_pic"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -44,6 +48,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:text="TextView"
+
                 app:layout_constraintStart_toEndOf="@+id/profile_pic"
                 app:layout_constraintTop_toBottomOf="@+id/user_name" />
 
@@ -51,7 +56,7 @@
                 android:id="@+id/post_img"
                 android:layout_width="409dp"
                 android:layout_height="220dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="24dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.19"
                 app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +77,7 @@
                 android:id="@+id/post_hp"
                 android:layout_width="133dp"
                 android:layout_height="34dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:text="TextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.425"
@@ -81,22 +86,22 @@
 
             <ImageButton
                 android:id="@+id/toMap"
-                android:layout_width="41dp"
-                android:layout_height="36dp"
+                android:layout_width="44dp"
+                android:layout_height="39dp"
                 android:layout_marginStart="310dp"
                 android:layout_marginTop="200dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="459dp"
                 android:background="#FFF"
-                android:padding="3dp"
+                android:padding="2dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/googlemaps"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.604"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.522" />
+                app:layout_constraintVertical_bias="0.539" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

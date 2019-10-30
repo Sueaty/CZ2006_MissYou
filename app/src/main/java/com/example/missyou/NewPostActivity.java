@@ -83,10 +83,6 @@ public class  NewPostActivity extends AppCompatActivity{
    // String uid;
   public  double[] geoLocate(){
 
-
-
-
-
       mSearchText = (AutoCompleteTextView) findViewById(R.id.input_search);
 
       String searchString = mSearchText.getText().toString();

@@ -1,6 +1,7 @@
 package com.example.missyou;
 
 
+import android.content.Intent;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
@@ -30,18 +34,19 @@ public class postRecyclerAdapter extends RecyclerView.Adapter<postRecyclerAdapte
     public Context context;
     private TextView descView;
     private TextView userHp;
+
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
     private View mView;
     private ImageView blogImageView;
-
+    //private View mapView;
 
     public postRecyclerAdapter(List<userpost>post_list){
         this.post_list = post_list;
 
     }
 
-    
+
 
 
     @Override
@@ -50,7 +55,11 @@ public class postRecyclerAdapter extends RecyclerView.Adapter<postRecyclerAdapte
         context = parent.getContext();
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
+
         return new ViewHolder(view);
+
+
+
     }
 
 
@@ -133,6 +142,7 @@ public class postRecyclerAdapter extends RecyclerView.Adapter<postRecyclerAdapte
 
             super(itemView);
             mView = itemView;
+            init(mView);
 
         }
 
@@ -181,7 +191,23 @@ public class postRecyclerAdapter extends RecyclerView.Adapter<postRecyclerAdapte
             Glide.with(context).applyDefaultRequestOptions(placeholderOption).load(image).into(profilepic);
 
         }
+
     }
+
+
+    private void init(View v) {
+
+        ImageButton toMap = (ImageButton) v.findViewById(R.id.toMap);
+
+        toMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context,  lostFoundPetsLocationActivity.class);
+                context.startActivity(intent);
+            }
+        });
+    }
+
 
 
 }

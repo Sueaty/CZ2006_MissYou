@@ -372,24 +372,8 @@ FirebaseFirestore db = FirebaseFirestore.getInstance();
         }
 
 
-/*
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-*/
+
     }
-
-    /*
-    mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener){
-        @Override
-                public void onInfoWindowClick(Marker marker){
-
-
-
-        }
-    }*/
-
 
 
     private void updateLocationUI() {
