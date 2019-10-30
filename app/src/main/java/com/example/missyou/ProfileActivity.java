@@ -133,8 +133,15 @@ public class ProfileActivity extends AppCompatActivity {
                         Glide.with(ProfileActivity.this).setDefaultRequestOptions(placeholderRequest).load(image).into(profileImage);
 
                     } else {
-                        String error = task.getException().getMessage();
-                        Toast.makeText(ProfileActivity.this, "(FIRESTORE Retrieve Error) : " + error, Toast.LENGTH_LONG).show();
+                        try {
+                            String error = task.getException().getMessage();
+                             Toast.makeText(ProfileActivity.this, "(FIRESTORE Retrieve Error) : " + error, Toast.LENGTH_LONG).show();
+
+                        }
+                        catch(java.lang.NullPointerException exception) {
+                        }
+                      //  Toast.makeText(ProfileActivity.this, "(FIRESTORE Retrieve Error) : " + error, Toast.LENGTH_LONG).show();
+
                     }
                 }
             }
