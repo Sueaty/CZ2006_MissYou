@@ -103,7 +103,13 @@ public class MainActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.navigation_search :
-                        InitializeFragments(lostFragment);
+                        if(currentUser == null){
+                            AlertDialog registerAlert = builder.create();
+                            registerAlert.show();
+                        }
+                        else{
+                            InitializeFragments(lostFragment);
+                        }
                         return true;
 
                     case R.id.navigation_map:
