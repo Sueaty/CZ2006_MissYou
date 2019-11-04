@@ -50,9 +50,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/yourEmail" />
 
-
     <AutoCompleteTextView
-        android:id="@+id/input_search"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_centerVertical="true"
@@ -66,8 +64,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/descriptions"
-         />
+        app:layout_constraintTop_toTopOf="@id/descriptions" />
 
     <EditText
         android:id="@+id/descriptions"

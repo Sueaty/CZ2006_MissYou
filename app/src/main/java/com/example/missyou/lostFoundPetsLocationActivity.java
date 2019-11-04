@@ -36,7 +36,19 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -106,7 +118,9 @@ import java.util.List;
         import com.google.firebase.database.FirebaseDatabase;
         import com.google.firebase.firestore.CollectionReference;
         import com.google.firebase.firestore.FirebaseFirestore;
-        import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
 
         import android.Manifest;
 
@@ -116,6 +130,13 @@ import java.util.List;
         import java.util.HashMap;
 
 public class lostFoundPetsLocationActivity extends FragmentActivity implements OnMapReadyCallback {
+
+   // private DatabaseReference mUsers;
+    private CollectionReference mUsers;
+    private ChildEventListener mChildEventListenet;
+    private DocumentReference postRef;
+    Marker marker;
+
 
     private GoogleMap mMap;
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
@@ -132,7 +153,8 @@ public class lostFoundPetsLocationActivity extends FragmentActivity implements O
     private static final String TAG = "lostFoundPetsLocationActivity";
     public double latitude;
     public double longitude;
-
+   public LatLng loc;
+//public int position;
     private AutoCompleteTextView mAutocompleteTextView;
     private PlaceAutocomplete placeAutocomplete;
 
@@ -141,20 +163,32 @@ public class lostFoundPetsLocationActivity extends FragmentActivity implements O
     private EditText mSearchText;
     private ImageView mGps;
 
+//firebase
+
+public int position;
+    public List<userpost> post_list;
+
+    //public postRecyclerAdapter user_id;
+    //public List<userpost>post_list;
+/*
+    public lostFoundPetsLocationActivity(){
+
+        this.post_list = post_list;
+
+    }
+
+*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lost_found_pets_location);
 
         getLocationPermission();
-
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        //  mGeoDataClient = Places.getGeoDataClient(this, null);
-        // Construct a PlaceDetectionClient.
-        //  mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
-        //    mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
         mSearchText = (EditText) findViewById(R.id.input_search);
         mGps = (ImageView) findViewById(R.id.ic_gps);
 
@@ -164,9 +198,20 @@ public class lostFoundPetsLocationActivity extends FragmentActivity implements O
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+    ChildEventListener mChildEvenetListener;
 
-        ///mMap.setOnInfoWindowClickListener(this);
 
+//////////////////////////
+    mUsers = FirebaseFirestore.getInstance().collection("Users");
+
+///post_list.get(position); error
+/*
+   String user_id = post_list.get(position).getUser_id();
+
+    postRef = mUsers.document(user_id);
+   // mUsers.push().setValue(marker);
+
+*/
 
     }
 
@@ -250,8 +295,6 @@ public class lostFoundPetsLocationActivity extends FragmentActivity implements O
 
 
 
-
-
         // to drop down a pin
 
         MarkerOptions options = new MarkerOptions()
@@ -278,25 +321,49 @@ public class lostFoundPetsLocationActivity extends FragmentActivity implements O
             //gonna block location button with searchbar anyway, make it false
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
+// retriving data from firebase
+         //   this.post_list = post_list;
 
-            //init();
-/////////demo(should place user data)
-            LatLng lastSeenLocation = new LatLng(1.422055, 103.764182);
-            mMap.addMarker(new MarkerOptions().position(lastSeenLocation).title("last seen location"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(lastSeenLocation));
+/*
+            postRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            GeoPoint geo = document.getGeoPoint("location");
+
+                          //  String name = document.getString("name");
+                            double lat = geo.getLatitude();
+                            double lng = geo.getLongitude();
+                            LatLng latLng = new LatLng(lat, lng);
+                            mMap.addMarker(new MarkerOptions().position(latLng).title("last seen location"));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+                        }
+                    }
+                    else
+                        Toast.makeText(lostFoundPetsLocationActivity.this, "retrieving data error ", Toast.LENGTH_SHORT).show();
+
+
+
+                }
+            });*/
+
+
+
+
 
         }
 
 
-/*
+
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        LatLng sydney = new LatLng(1.28, 103.86);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("last seen location"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-*/
+
     }
-
-
 
 
     private void updateLocationUI() {

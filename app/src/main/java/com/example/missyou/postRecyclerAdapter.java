@@ -1,6 +1,4 @@
 package com.example.missyou;
-
-
 import android.content.Intent;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -15,6 +13,7 @@ import android.content.Context;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -39,14 +38,16 @@ public class postRecyclerAdapter extends RecyclerView.Adapter<postRecyclerAdapte
     private FirebaseAuth firebaseAuth;
     private View mView;
     private ImageView blogImageView;
+
+    public LatLng location;
+
+
     //private View mapView;
 
     public postRecyclerAdapter(List<userpost>post_list){
         this.post_list = post_list;
 
     }
-
-
 
 
     @Override
@@ -67,11 +68,20 @@ public class postRecyclerAdapter extends RecyclerView.Adapter<postRecyclerAdapte
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.setIsRecyclable(false);
 
+
         String desc_data = post_list.get(position).getDesc();
+
         holder.setDescText(desc_data);
 
         String user_phone = post_list.get(position).getUser_phone();
         holder.setPost_hp(user_phone);
+
+       // double latitude = post_list.get(position).getLatitude();
+        //double longitude = post_list.get(position).getLongitude();
+////////////////////////////////////////////////////////////////////
+        LatLng location = post_list.get(position).getLocation();
+         holder.setLocation(location);
+
 
         String image_url = post_list.get(position).getImage_url();
         String thumbUri = post_list.get(position).getImage_thumb();
@@ -79,6 +89,7 @@ public class postRecyclerAdapter extends RecyclerView.Adapter<postRecyclerAdapte
 
 
         String user_id = post_list.get(position).getUser_id();
+
         //User Data will be retrieved here...
         firebaseFirestore.collection("Users").document(user_id).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -117,7 +128,6 @@ public class postRecyclerAdapter extends RecyclerView.Adapter<postRecyclerAdapte
         }
 
 
-
     }
 
     @Override
@@ -128,11 +138,12 @@ public class postRecyclerAdapter extends RecyclerView.Adapter<postRecyclerAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private View mView;
-
+       private TextView LocView;
         private TextView post_des; //descView
         private ImageView post_img; //blogImageView
         private TextView post_date; //blogDate
         private TextView post_hp;
+
 
         private TextView username;  //blogUserName
         private ImageView profilepic; //blogUserImage
@@ -170,6 +181,38 @@ public class postRecyclerAdapter extends RecyclerView.Adapter<postRecyclerAdapte
             ).into(blogImageView);
 
         }
+/*
+        public void setLatitude(double latitude){
+
+            LocView = mView.findViewById(R.id.toMap);
+            LocView.setText(latitude);
+
+        }
+
+        public void setLongitude( double longitude){
+
+
+
+
+
+        }
+
+
+*/
+
+ public void setLocation(LatLng location){
+
+     //lostFoundPetsLocationActivity lostFoundLoc = new lostFoundPetsLocationActivity();
+
+   // LatLng location = new LatLng(latitude , longitude);
+
+
+
+  //LocView = mView.findViewById(R.id.post_hp);//////////change!!
+    //LocView.setText(location.toString());
+ }
+
+
 
         public void setTime(String date) {
 
@@ -178,11 +221,11 @@ public class postRecyclerAdapter extends RecyclerView.Adapter<postRecyclerAdapte
 
         }
 
+
         public void setUserData(String name, String image){   // user profile pic and name
 
             profilepic= mView.findViewById(R.id.profile_pic);
             username = mView.findViewById(R.id.user_name);
-
             username.setText(name);
 
             RequestOptions placeholderOption = new RequestOptions();
