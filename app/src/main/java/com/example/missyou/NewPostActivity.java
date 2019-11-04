@@ -214,7 +214,8 @@ public class  NewPostActivity extends AppCompatActivity{
                                 postMap.put("Longitude",longitude );
 
                                 postMap.put("Email",postemail);
-                                postMap.put("Phone",postph);
+                              //  postMap.put("Phone",postph);
+                                postMap.put("user_phone",postph);
                                 postMap.put("user_id", current_user_id);
                                 postMap.put("timestamp", FieldValue.serverTimestamp());
                                 firebaseFirestore.collection("Posts").add(postMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
