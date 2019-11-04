@@ -8,6 +8,7 @@ package com.example.missyou;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -40,6 +41,7 @@ public class UserRegisterActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseFirestore firebaseFirestore;
 
+    private Toolbar toolbar;
     private EditText inputName, inputEmail, inputPassword;
     private Button btnSignUp;
 
@@ -54,10 +56,15 @@ public class UserRegisterActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
+        toolbar = findViewById(R.id.registerToolbar);
         inputName = findViewById(R.id.inputName);
         inputEmail = findViewById(R.id.tvEmail);
         inputPassword = findViewById(R.id.inputPassword);
         btnSignUp = findViewById(R.id.btnSignUp);
+
+        // Set up toolbar for ProfileActivity
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("User Register");
 
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
