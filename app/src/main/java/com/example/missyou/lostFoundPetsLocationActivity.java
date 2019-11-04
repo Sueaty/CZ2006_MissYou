@@ -157,7 +157,6 @@ public class lostFoundPetsLocationActivity extends FragmentActivity implements O
 
         mSearchText = (EditText) findViewById(R.id.input_search);
         mGps = (ImageView) findViewById(R.id.ic_gps);
-
         mAutocompleteTextView = (AutoCompleteTextView) findViewById(R.id.places_autocomplete_edit_text);
 
 //build the map

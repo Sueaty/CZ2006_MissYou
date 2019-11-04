@@ -8,6 +8,7 @@ package com.example.missyou;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private Toolbar toolbar;
     private TextView tvRegister;
     private EditText inputEmail, inputPassword;
     private Button btnLogin;
@@ -35,10 +37,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
+        toolbar = findViewById(R.id.loginToolbar);
         inputEmail = findViewById(R.id.tvEmail);
         inputPassword = findViewById(R.id.inputPassword);
         btnLogin = findViewById(R.id.btnLogin);
         tvRegister = findViewById(R.id.tvRegister);
+
+        // Set up toolbar for LoginActivity
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Login");
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
