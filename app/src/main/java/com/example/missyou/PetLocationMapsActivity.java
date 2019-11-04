@@ -4,6 +4,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -107,10 +108,10 @@ public class PetLocationMapsActivity extends FragmentActivity implements OnMapRe
         getLocationPermission();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
- //  mGeoDataClient = Places.getGeoDataClient(this, null);
+        //  mGeoDataClient = Places.getGeoDataClient(this, null);
         // Construct a PlaceDetectionClient.
-     //  mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
-    //    mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        //  mPlaceDetectionClient = Places.getPlaceDetectionClient(this, null);
+        //    mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         mSearchText = (EditText) findViewById(R.id.input_search);
         mGps = (ImageView) findViewById(R.id.ic_gps);
@@ -130,19 +131,16 @@ public class PetLocationMapsActivity extends FragmentActivity implements OnMapRe
     @Override
     public void onInfoWindowClick(Marker marker){
 
-   //     Toast.makeText(this, "info window clicked",Toast.LENGTH_SHORT).show();
-FirebaseFirestore db = FirebaseFirestore.getInstance();
+        //     Toast.makeText(this, "info window clicked",Toast.LENGTH_SHORT).show();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 /*
         ////firebase//////////
  NewPostActivity newpost = new NewPostActivity();
  //newpost.postMap.put("latitude",latitude);
  //newpost.postMap.put("longitude",longitude);
-
-
         ///store in realtime database
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference("Latitude");
-
         databaseReference.setValue(latitude).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -151,11 +149,9 @@ FirebaseFirestore db = FirebaseFirestore.getInstance();
                 }
                 else
                     Toast.makeText(PetLocationMapsActivity.this,"Latitude not saved", Toast.LENGTH_SHORT).show();
-
             }
         });
         DatabaseReference databaseReference2 = firebaseDatabase.getReference("Longitude");
-
         databaseReference2.setValue(longitude).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -164,9 +160,6 @@ FirebaseFirestore db = FirebaseFirestore.getInstance();
                 }
                 else
                     Toast.makeText(PetLocationMapsActivity.this,"Longitude not saved", Toast.LENGTH_SHORT).show();
-
-
-
             }
         });*/
 
@@ -190,7 +183,7 @@ FirebaseFirestore db = FirebaseFirestore.getInstance();
 
                     geoLocate();//geolocate the search string you entered to search field
 
-            }
+                }
                 return false;
             }
         });
@@ -209,42 +202,39 @@ FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
 
-            String searchString = mSearchText.getText().toString();
-            Log.d(TAG,"geoLocate: geolocating");
+        String searchString = mSearchText.getText().toString();
+        Log.d(TAG,"geoLocate: geolocating");
 
-            Geocoder geocoder = new Geocoder(PetLocationMapsActivity.this);
+        Geocoder geocoder = new Geocoder(PetLocationMapsActivity.this);
 
-            List<Address> list = new ArrayList<>();
+        List<Address> list = new ArrayList<>();
 
-            try{
-                list = geocoder.getFromLocationName(searchString,1);
-            }catch( IOException e){
-                Log.e(TAG,"geolocate: IO Exception: " + e.getMessage());
+        try{
+            list = geocoder.getFromLocationName(searchString,1);
+        }catch( IOException e){
+            Log.e(TAG,"geolocate: IO Exception: " + e.getMessage());
 
-            }
+        }
 
-           // if(list.size()>0) {//if we had result
-              final Address address = list.get(0);
+        // if(list.size()>0) {//if we had result
+        final Address address = list.get(0);
 
-                Log.d(TAG, "geolocate: found a location: " + address.toString());
+        Log.d(TAG, "geolocate: found a location: " + address.toString());
 
-                moveCamera(new LatLng(address.getLatitude(),address.getLongitude()),DEFAULT_ZOOM,address.getAddressLine(0));
+        moveCamera(new LatLng(address.getLatitude(),address.getLongitude()),DEFAULT_ZOOM,address.getAddressLine(0));
 
-                double locationAry[] = new double[2];
-                locationAry[0] = address.getLatitude();
-                locationAry[1] = address.getLongitude();
+        double locationAry[] = new double[2];
+        locationAry[0] = address.getLatitude();
+        locationAry[1] = address.getLongitude();
 
 
-                latitude = address.getLatitude();
-                longitude = address.getLongitude();
+        latitude = address.getLatitude();
+        longitude = address.getLongitude();
 
                 /*
                 //firebase
-
-
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = firebaseDatabase.getReference("Latitude");
-
                 databaseReference.setValue(address.getLatitude()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -253,11 +243,9 @@ FirebaseFirestore db = FirebaseFirestore.getInstance();
                         }
                         else
                             Toast.makeText(PetLocationMapsActivity.this,"Latitude not saved", Toast.LENGTH_SHORT).show();
-
                     }
                 });
                 DatabaseReference databaseReference2 = firebaseDatabase.getReference("Longitude");
-
                 databaseReference2.setValue(address.getLongitude()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -266,17 +254,14 @@ FirebaseFirestore db = FirebaseFirestore.getInstance();
                         }
                         else
                             Toast.makeText(PetLocationMapsActivity.this,"Longitude not saved", Toast.LENGTH_SHORT).show();
-
-
-
                     }
                 });*/
 
-           //     return locationAry;
+        //     return locationAry;
 
-            //}
+        //}
 
-            return locationAry;
+        return locationAry;
 
     }
 
@@ -305,7 +290,7 @@ FirebaseFirestore db = FirebaseFirestore.getInstance();
                             Log.d(TAG, "onComplete: current location is null");
                             Log.e(TAG, "Exception: %s", task.getException());
                             Toast.makeText(PetLocationMapsActivity.this, " unable to get current location", Toast.LENGTH_SHORT).show();
-                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation,DEFAULT_ZOOM));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mDefaultLocation,DEFAULT_ZOOM));
                             mMap.getUiSettings().setMyLocationButtonEnabled(false);
                         }
                     }
@@ -332,12 +317,16 @@ FirebaseFirestore db = FirebaseFirestore.getInstance();
 
 
         // to drop down a pin
-
         MarkerOptions options = new MarkerOptions()
                 .position(latLng)
                 .title(title);
         mMap.addMarker(options);
         mMap.setOnInfoWindowClickListener(this);
+
+        String userCurrentLocation = options.getTitle();
+        Intent intent = new Intent(PetLocationMapsActivity.this, NewPostActivity.class);
+        intent.putExtra("location", userCurrentLocation);
+        startActivity(intent);
 
     }
 
@@ -394,38 +383,38 @@ FirebaseFirestore db = FirebaseFirestore.getInstance();
     }
 
 
-private void getLocationPermission() {
-    /*
-     * Request location permission, so that we can get the location of the
-     * device. The result of the permission request is handled by a callback,
-     * onRequestPermissionsResult.
-     */
-    if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-            android.Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
-        mLocationPermissionsGranted = true;
-    } else {
-        ActivityCompat.requestPermissions(this,
-                new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-    }
-}
-
-@Override
-public void onRequestPermissionsResult(int requestCode,
-                                       @NonNull String permissions[],
-                                       @NonNull int[] grantResults) {
-    mLocationPermissionsGranted = false;
-    switch (requestCode) {
-        case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-            // If request is cancelled, the result arrays are empty.
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mLocationPermissionsGranted = true;
-            }
+    private void getLocationPermission() {
+        /*
+         * Request location permission, so that we can get the location of the
+         * device. The result of the permission request is handled by a callback,
+         * onRequestPermissionsResult.
+         */
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionsGranted = true;
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
     }
-    updateLocationUI();
-}
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+        mLocationPermissionsGranted = false;
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mLocationPermissionsGranted = true;
+                }
+            }
+        }
+        updateLocationUI();
+    }
 
 }

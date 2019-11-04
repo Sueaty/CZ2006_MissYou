@@ -1,25 +1,18 @@
 package com.example.missyou;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
-
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -37,104 +30,18 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
+import com.google.firebase.firestore.CollectionReference;
 
-
-        import androidx.annotation.NonNull;
-        import androidx.core.app.ActivityCompat;
-        import androidx.core.content.ContextCompat;
-        import androidx.fragment.app.FragmentActivity;
-
-        import android.location.Address;
-        import android.location.Geocoder;
-        import android.location.Location;
-
-        import android.content.pm.PackageManager;
-        import android.os.Bundle;
-        import android.util.Log;
-        import android.view.KeyEvent;
-        import android.view.View;
-        import android.view.WindowManager;
-        import android.view.inputmethod.EditorInfo;
-        import android.widget.AdapterView;
-        import android.widget.AutoCompleteTextView;
-        import android.widget.EditText;
-        import android.widget.ImageView;
-        import android.widget.TextView;
-        import android.widget.Toast;
-        import com.google.android.gms.location.places.AutocompleteFilter;
-        import com.google.android.gms.location.places.AutocompletePrediction;
-        import com.google.android.gms.location.places.AutocompletePredictionBuffer;
-
-        import com.google.android.gms.location.places.ui.PlaceAutocomplete;
-
-
-        import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
-
-        import com.google.android.gms.common.ConnectionResult;
-        import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-        import com.google.android.gms.common.GooglePlayServicesRepairableException;
-        import com.google.android.gms.common.api.GoogleApiClient;
-        import com.google.android.gms.common.api.PendingResult;
-        import com.google.android.gms.common.api.ResultCallback;
-        import com.google.android.gms.location.FusedLocationProviderClient;
-        import com.google.android.gms.location.LocationServices;
-        import com.google.android.gms.location.places.PlaceDetectionClient;
-
-        import com.google.android.libraries.places.api.Places;
-        import com.google.android.gms.location.places.GeoDataClient;
-        import com.google.android.gms.location.places.PlaceDetectionClient;
-
-
-        import com.google.android.gms.maps.CameraUpdateFactory;
-        import com.google.android.gms.maps.GoogleMap;
-        import com.google.android.gms.maps.OnMapReadyCallback;
-        import com.google.android.gms.maps.SupportMapFragment;
-        import com.google.android.gms.maps.model.LatLng;
-        import com.google.android.gms.maps.model.LatLngBounds;
-        import com.google.android.gms.maps.model.Marker;
-
-        import com.google.android.gms.maps.model.MarkerOptions;
-
-        import com.google.android.gms.tasks.OnCompleteListener;
-        import com.google.android.gms.tasks.Task;
-        import com.google.android.libraries.places.widget.Autocomplete;
-        import com.google.firebase.database.DatabaseReference;
-        import com.google.firebase.database.FirebaseDatabase;
-        import com.google.firebase.firestore.CollectionReference;
-        import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.GeoPoint;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-
-        import android.Manifest;
-
-        import java.io.IOException;
-        import java.util.ArrayList;
-        import java.util.List;
-        import java.util.HashMap;
 
 public class lostFoundPetsLocationActivity extends FragmentActivity implements OnMapReadyCallback {
 
-   // private DatabaseReference mUsers;
     private CollectionReference mUsers;
     private ChildEventListener mChildEventListenet;
     private DocumentReference postRef;
+
     Marker marker;
 
 
@@ -163,9 +70,8 @@ public class lostFoundPetsLocationActivity extends FragmentActivity implements O
     private EditText mSearchText;
     private ImageView mGps;
 
-//firebase
-
-public int position;
+    //firebase
+    public int position;
     public List<userpost> post_list;
 
     //public postRecyclerAdapter user_id;
@@ -183,43 +89,49 @@ public int position;
     protected void onCreate(Bundle savedInstanceState) {
 
 
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lost_found_pets_location);
 
         getLocationPermission();
+
         mSearchText = (EditText) findViewById(R.id.input_search);
         mGps = (ImageView) findViewById(R.id.ic_gps);
         mAutocompleteTextView = (AutoCompleteTextView) findViewById(R.id.places_autocomplete_edit_text);
-
-//build the map
+        //build the map
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-    ChildEventListener mChildEvenetListener;
+        ChildEventListener mChildEvenetListener;
+        mUsers = FirebaseFirestore.getInstance().collection("Users");
 
-
-//////////////////////////
-    mUsers = FirebaseFirestore.getInstance().collection("Users");
-
-///post_list.get(position); error
-
-  //  String user_id = post_list.get(position).getUser_id();
-
-    //postRef = mUsers.document(user_id);
-   // mUsers.push().setValue(marker);
-
-
+        // post_list.get(position); error
+        //  String user_id = post_list.get(position).getUser_id();
+        // postRef = mUsers.document(user_id);
+        // mUsers.push().setValue(marker);
     }
 
-
+    private void getLocationPermission() {
+        /*
+         * Request location permission, so that we can get the location of the
+         * device. The result of the permission request is handled by a callback,
+         * onRequestPermissionsResult.
+         */
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mLocationPermissionsGranted = true;
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+    }
 
 
     private void init(){
         Log.d(TAG,"init: initializing");
 
-     /*   mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        /*   mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_DONE
@@ -233,7 +145,8 @@ public int position;
                 return false;
             }
         });
-*/
+        */
+
         mGps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -281,10 +194,10 @@ public int position;
         }
     }
 
-    public void moveCamera(LatLng latLng , float zoom, String title){
+    public void moveCamera(LatLng latLng , float zoom, String title) {
 
-        Log.d(TAG,"moveCamera: moving the camera to: lat:" + latLng.latitude + ", long" + latLng.longitude);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
+        Log.d(TAG, "moveCamera: moving the camera to: lat:" + latLng.latitude + ", long" + latLng.longitude);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
 
         NewPostActivity newP = new NewPostActivity();
 
@@ -292,14 +205,12 @@ public int position;
         newP.longitude = latLng.longitude;
 
 
-
         // to drop down a pin
-
-        MarkerOptions options = new MarkerOptions()
+        final MarkerOptions options = new MarkerOptions()
                 .position(latLng)
                 .title(title);
         mMap.addMarker(options);
-   //     mMap.setOnInfoWindowClickListener(lostFoundPetsLocationActivity.this);
+        // mMap.setOnInfoWindowClickListener(lostFoundPetsLocationActivity.this);
 
     }
 
@@ -308,21 +219,18 @@ public int position;
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Toast.makeText(this, "Map is ready", Toast.LENGTH_SHORT).show();
-        mMap = googleMap;
 
+        mMap = googleMap;
         if(mLocationPermissionsGranted){
             updateLocationUI();
-
             getDeviceLocation();
 
             mMap.setMyLocationEnabled(true);
-            //gonna block location button with searchbar anyway, make it false
-            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+            mMap.getUiSettings().setMyLocationButtonEnabled(false); //gonna block location button with searchbar anyway, make it false
 
             /*
-// retriving data from firebase
+            // retriving data from firebase
             this.post_list = post_list;
-
 
             postRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
@@ -344,13 +252,9 @@ public int position;
                     else
                         Toast.makeText(lostFoundPetsLocationActivity.this, "retrieving data error ", Toast.LENGTH_SHORT).show();
 
-
-
                 }
             });
-
-
-*/
+            */
 
 
         }
@@ -382,23 +286,6 @@ public int position;
         }
     }
 
-
-    private void getLocationPermission() {
-        /*
-         * Request location permission, so that we can get the location of the
-         * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult.
-         */
-        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            mLocationPermissionsGranted = true;
-        } else {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-        }
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode,

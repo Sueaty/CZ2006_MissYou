@@ -1,3 +1,5 @@
+
+
 package com.example.missyou;
 import com.example.missyou.PetLocationMapsActivity;
 import androidx.annotation.NonNull;
@@ -48,10 +50,10 @@ import java.util.UUID;
 public class  NewPostActivity extends AppCompatActivity{
     private ImageView newPostImage;
     private EditText yourPhone, yourEmail, yourDescription;
-    private TextView yourAddress;
+    private TextView userLocation; //, userAddress
     Map<String, Object> postMap;
     String locationText;
-    private Button btnPost;
+    private Button btnPost, btnMap;
     private final int PICK_IMAGE_REQUEST = 71;
     private StorageReference storageReference;
     private FirebaseAuth firebaseAuth;
@@ -70,51 +72,46 @@ public class  NewPostActivity extends AppCompatActivity{
 
     //private DatabaseReference mDatabase;
 
-    private AutoCompleteTextView mSearchText;
-    public PlaceAutocomplete placeAutocomplete;
-
 
 
     //  FirebaseUser user;
-   // String uid;
-  public  double[] geoLocate(){
+    // String uid;
+    public  double[] geoLocate(){
 
-      mSearchText = (AutoCompleteTextView) findViewById(R.id.input_search);
+        String searchString = userLocation.getText().toString();
+        // Log.d(TAG,"geoLocate: geolocating");
 
-      String searchString = mSearchText.getText().toString();
-     // Log.d(TAG,"geoLocate: geolocating");
+        Geocoder geocoder = new Geocoder(NewPostActivity.this);
 
-      Geocoder geocoder = new Geocoder(NewPostActivity.this);
+        List<Address> list = new ArrayList<>();
 
-      List<Address> list = new ArrayList<>();
+        try{
+            list = geocoder.getFromLocationName(searchString,1);
+        }catch( IOException e){
+            //   Log.e(TAG,"geolocate: IO Exception: " + e.getMessage());
 
-      try{
-          list = geocoder.getFromLocationName(searchString,1);
-      }catch( IOException e){
-       //   Log.e(TAG,"geolocate: IO Exception: " + e.getMessage());
+        }
 
-      }
+        // if(list.size()>0) {//if we had result
+        final Address address = list.get(0);
 
-      // if(list.size()>0) {//if we had result
-      final Address address = list.get(0);
+        //   Log.d(TAG, "geolocate: found a location: " + address.toString());
 
-   //   Log.d(TAG, "geolocate: found a location: " + address.toString());
+        //  moveCamera(new LatLng(address.getLatitude(),address.getLongitude()),DEFAULT_ZOOM,address.getAddressLine(0));
 
-    //  moveCamera(new LatLng(address.getLatitude(),address.getLongitude()),DEFAULT_ZOOM,address.getAddressLine(0));
+        double locationAry[] = new double[2];
+        locationAry[0] = address.getLatitude();
+        locationAry[1] = address.getLongitude();
 
-      double locationAry[] = new double[2];
-      locationAry[0] = address.getLatitude();
-      locationAry[1] = address.getLongitude();
-
-      latitude = address.getLatitude();
-      longitude = address.getLongitude();
+        latitude = address.getLatitude();
+        longitude = address.getLongitude();
 
 
 
 
-      return locationAry;
+        return locationAry;
 
-  }
+    }
 
 
     @Override
@@ -122,13 +119,10 @@ public class  NewPostActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
 
-        init();//Location button
-
-
         storageReference = FirebaseStorage.getInstance().getReference();
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
-      //  mDatabase = FirebaseDatabase.getInstance().getReference();
+        //  mDatabase = FirebaseDatabase.getInstance().getReference();
 
 
         currentUser = firebaseAuth.getCurrentUser();
@@ -138,26 +132,41 @@ public class  NewPostActivity extends AppCompatActivity{
         newPostImage = findViewById(R.id.newPostImage);
 
         //type textview
-      //  yourAddress =  findViewById(R.id.yourAddress);
+        //  yourAddress =  findViewById(R.id.yourAddress);
 
-      //yourAddress = yourAddress.setText(postadd);
+        //yourAddress = yourAddress.setText(postadd);
 
         //yourEmail = findViewById(R.id.yourEmail);
         yourPhone = findViewById(R.id.yourPhone);
         yourDescription = findViewById(R.id.descriptions);
+        userLocation = findViewById(R.id.userLocation);
+        btnMap = findViewById(R.id.btnMap);
         btnPost = findViewById(R.id.btnPost);
+
+        try {
+            Bundle bundle = getIntent().getExtras();
+            String userCurrentLocation = bundle.getString("location");
+            userLocation.setText(userCurrentLocation);
+        } catch(NullPointerException e){
+
+        }
+
+        btnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NewPostActivity.this,  PetLocationMapsActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // Intent intent = new Intent(NewPostActivity.this,MainActivity.class);  // jum to Main Activity
+                // Intent intent = new Intent(NewPostActivity.this,MainActivity.class);  // jum to Main Activity
                 File newImageFile = new File(postImageUri.getPath());
                 final String Postdesc = yourDescription.getText().toString();
 
-            //    final String postadd = yourAddress.getText().toString();
-
-              //   yourAddress.setText(postadd);
-            //   yourAddress.setText(getAddress());
 
 
                 // final String postemail = yourEmail.getText().toString();a
@@ -192,29 +201,29 @@ public class  NewPostActivity extends AppCompatActivity{
                             @Override
                             public void onSuccess(Uri uri) {
                                 postMap = new HashMap<>();
-                            //    PetLocationMapsActivity loc = new PetLocationMapsActivity();
+                                //    PetLocationMapsActivity loc = new PetLocationMapsActivity();
 
 
-                               latitude = (double) geoLocate()[0];
-                               longitude = (double) geoLocate()[1];
-                               latLng = new LatLng(latitude,longitude);
-                              //   latitude = loc.latitude;
-                               // longitude = loc.longitude;
+                                latitude = (double) geoLocate()[0];
+                                longitude = (double) geoLocate()[1];
+                                latLng = new LatLng(latitude,longitude);
+                                //   latitude = loc.latitude;
+                                // longitude = loc.longitude;
 
 
                                 Log.e("IMAGE URL", uri.toString());
                                 postMap.put("image_url", uri.toString());
                                 postMap.put("desc", Postdesc);
-                               //  postMap.put("Location",postadd);
+                                //  postMap.put("Location",postadd);
 
-                              //  loc.geoLocate();
+                                //  loc.geoLocate();
                                 postMap.put("location", latLng);
 
                                 postMap.put("Latitude", latitude);
                                 postMap.put("Longitude",longitude );
 
                                 postMap.put("Email",postemail);
-                              //  postMap.put("Phone",postph);
+                                //  postMap.put("Phone",postph);
                                 postMap.put("user_phone",postph);
                                 postMap.put("user_id", current_user_id);
                                 postMap.put("timestamp", FieldValue.serverTimestamp());
@@ -260,42 +269,33 @@ public class  NewPostActivity extends AppCompatActivity{
 
 
     }
-        private void chooseImage() {
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    private void chooseImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null )
+        {
+            postImageUri = data.getData();
+            newPostImage.setImageURI(postImageUri);
         }
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-            if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                    && data != null && data.getData() != null )
-            {
-                postImageUri = data.getData();
-                newPostImage.setImageURI(postImageUri);
-            }
-        }
-        //button to open PetLocationMapsActivity
-private void init() {
-        Button toMap = (Button) findViewById(R.id.toMap);
+    }
 
-    toMap.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(NewPostActivity.this,  PetLocationMapsActivity.class);
-            startActivity(intent);
-        }
-    });
+
+    private String getExtension (Uri uri)
+    {
+        ContentResolver cr = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(cr.getType(uri));
+    }
+
+
 }
 
-        private String getExtension (Uri uri)
-        {
-            ContentResolver cr = getContentResolver();
-            MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-            return mimeTypeMap.getExtensionFromMimeType(cr.getType(uri));
-        }
 
-
-    }
 

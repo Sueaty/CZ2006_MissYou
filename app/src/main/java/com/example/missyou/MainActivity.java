@@ -95,13 +95,14 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
                 // Switch to select which case is chosen :
                 switch (menuItem.getItemId()){
+
                     // code to be executed when single item is selected
                     case R.id.navigation_home :
                         InitializeFragments(homeFragment);
                         return true;
-
                     case R.id.navigation_search :
                         if(currentUser == null){
                             AlertDialog registerAlert = builder.create();
@@ -111,11 +112,9 @@ public class MainActivity extends AppCompatActivity {
                             InitializeFragments(lostFragment);
                         }
                         return true;
-
                     case R.id.navigation_map:
                         InitializeFragments(mapFragment);
                         return true;
-
                     case R.id.navigation_settings:
                         if(currentUser == null){
                             AlertDialog registerAlert = builder.create();
@@ -138,15 +137,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         reportLost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (currentUser == null) {
-
                     AlertDialog registerAlert = builder.create();
                     registerAlert.show();
-
                 }
                 else startActivity(new Intent(MainActivity.this, NewPostActivity.class));
             }
@@ -156,13 +152,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (currentUser == null) {
-                    //startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                    //finish();
                     AlertDialog registerAlert = builder.create();
                     registerAlert.show();
                 }
                 else startActivity(new Intent(MainActivity.this, NewPostActivity.class));
-                //finish();
             }
         });
 

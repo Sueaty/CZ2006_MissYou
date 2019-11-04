@@ -7,13 +7,11 @@
     tools:context=".NewPostActivity">
 
 
-
-
     <ImageView
         android:id="@+id/newPostImage"
         android:layout_width="395dp"
         android:layout_height="199dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="60dp"
         android:scaleType="fitCenter"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,90 +26,86 @@
         style="@style/Test"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="284dp"
+        android:layout_marginEnd="20dp"
         android:ems="10"
         android:hint="Your Email"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newPostImage" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/yourPhone"
         style="@style/Test"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        android:layout_marginTop="59dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
         android:ems="10"
         android:hint="Your Phone"
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/yourEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/yourEmail" />
 
-    <AutoCompleteTextView
-        android:id="@+id/input_search"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/userLocation"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_centerVertical="true"
-        android:layout_marginTop="80dp"
-
-        android:hint=" Enter Address, City or Zip Code"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="20dp"
+        android:hint="Specify Your Location"
         android:imeOptions="actionSearch"
         android:textColor="#000"
-
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/descriptions" />
+        app:layout_constraintTop_toBottomOf="@+id/descriptions" />
 
     <EditText
         android:id="@+id/descriptions"
         style="@style/Test"
-        android:layout_width="403dp"
+        android:layout_width="0dp"
         android:layout_height="152dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Add more description about your pet"
-
         android:inputType="textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/yourPhone"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/yourPhone" />
 
     <Button
         android:id="@+id/btnPost"
         style="@style/Test"
         android:layout_width="133dp"
         android:layout_height="50dp"
+        android:layout_marginBottom="56dp"
         android:text="Post"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_search"
-        app:layout_constraintVertical_bias="0.225" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/toMap"
+        android:id="@+id/btnMap"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:layout_marginStart="310dp"
-        android:layout_marginTop="224dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="459dp"
-
+        android:layout_marginBottom="25dp"
         android:text="Location"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/userLocation"
+        app:layout_constraintEnd_toEndOf="@+id/userLocation"
+        app:layout_constraintTop_toTopOf="@+id/userLocation"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
