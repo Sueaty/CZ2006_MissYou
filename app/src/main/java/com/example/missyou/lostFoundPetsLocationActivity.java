@@ -204,13 +204,12 @@ public int position;
     mUsers = FirebaseFirestore.getInstance().collection("Users");
 
 ///post_list.get(position); error
-/*
-   String user_id = post_list.get(position).getUser_id();
 
-    postRef = mUsers.document(user_id);
+  //  String user_id = post_list.get(position).getUser_id();
+
+    //postRef = mUsers.document(user_id);
    // mUsers.push().setValue(marker);
 
-*/
 
     }
 
@@ -320,10 +319,11 @@ public int position;
             //gonna block location button with searchbar anyway, make it false
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
+            /*
 // retriving data from firebase
-         //   this.post_list = post_list;
+            this.post_list = post_list;
 
-/*
+
             postRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -347,20 +347,18 @@ public int position;
 
 
                 }
-            });*/
+            });
 
 
-
+*/
 
 
         }
 
-
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(1.28, 103.86);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("last seen location"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+ // Add a marker in Sydney and move the camera
+        LatLng currentloc = new LatLng(1.34, 103.68);
+        mMap.addMarker(new MarkerOptions().position(currentloc).title("last seen location"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentloc));
 
     }
 

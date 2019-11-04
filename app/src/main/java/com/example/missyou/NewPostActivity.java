@@ -30,7 +30,7 @@ import com.google.firebase.storage.UploadTask;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-
+import com.google.android.gms.maps.model.LatLng;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,6 +66,7 @@ public class  NewPostActivity extends AppCompatActivity{
     public double longitude = 0.0;
     public double latitude = 0.0;
     LatLng latLng;
+
 
     //private DatabaseReference mDatabase;
 
@@ -109,7 +110,7 @@ public class  NewPostActivity extends AppCompatActivity{
       longitude = address.getLongitude();
 
 
-      //place autocomplet
+
 
       return locationAry;
 
@@ -197,7 +198,7 @@ public class  NewPostActivity extends AppCompatActivity{
                                latitude = (double) geoLocate()[0];
                                longitude = (double) geoLocate()[1];
                                latLng = new LatLng(latitude,longitude);
-                             //   latitude = loc.latitude;
+                              //   latitude = loc.latitude;
                                // longitude = loc.longitude;
 
 

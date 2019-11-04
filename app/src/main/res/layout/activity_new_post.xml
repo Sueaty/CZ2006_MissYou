@@ -51,6 +51,7 @@
         app:layout_constraintTop_toTopOf="@+id/yourEmail" />
 
     <AutoCompleteTextView
+        android:id="@+id/input_search"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_centerVertical="true"
