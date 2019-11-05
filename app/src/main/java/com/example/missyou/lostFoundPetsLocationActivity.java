@@ -104,6 +104,14 @@ public class lostFoundPetsLocationActivity extends FragmentActivity implements O
         ChildEventListener mChildEvenetListener;
         mUsers = FirebaseFirestore.getInstance().collection("Users");
 
+        mGps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG,"OnClick: clicked gps icon");
+                getDeviceLocation();
+            }
+        });
+
         // post_list.get(position); error
         //  String user_id = post_list.get(position).getUser_id();
         // postRef = mUsers.document(user_id);
@@ -146,7 +154,7 @@ public class lostFoundPetsLocationActivity extends FragmentActivity implements O
             }
         });
         */
-
+/*
         mGps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -154,7 +162,7 @@ public class lostFoundPetsLocationActivity extends FragmentActivity implements O
                 getDeviceLocation();
             }
         });
-
+*/
     }
 
 

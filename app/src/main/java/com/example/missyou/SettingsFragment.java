@@ -121,7 +121,7 @@ public class SettingsFragment extends Fragment {
                         String phone = task.getResult().getString("phone");
                         String havePet = task.getResult().getString("havePet");
 
-                        //mainImageURI = Uri.parse(image);
+                        mainImageURI = Uri.parse(image);
                         inputName.setText(name);
                         inputEmail.setText(email);
                         inputPhone.setText(phone);

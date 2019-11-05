@@ -240,7 +240,6 @@ public class CenterFragment extends Fragment implements OnMapReadyCallback{
         mMap.addMarker(new MarkerOptions().position(Singapore_Turf_Club_Equine_Hospital).title("Singapore Turf Club Equine Hospital"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(Singapore_Turf_Club_Equine_Hospital));
 
-
         LatLng AAVC = new LatLng(1.426603 , 103.827469);
         mMap.addMarker(new MarkerOptions().position(AAVC).title("AAVC"));
 
@@ -256,8 +255,8 @@ public class CenterFragment extends Fragment implements OnMapReadyCallback{
         LatLng Passion_Veterinary_Clinic_Pte_Ltd = new LatLng(1.437843 , 103.782100);
         mMap.addMarker(new MarkerOptions().position(Passion_Veterinary_Clinic_Pte_Ltd ).title("Passion Veterinary Clinic Pte Ltd"));
 
-        LatLng AMK_Veterinary_Surgery_(2009)_Pte_Ltd = new LatLng(1.411674 , 103.786349);
-        mMap.addMarker(new MarkerOptions().position(AMK_Veterinary_Surgery_(2009)_Pte_Ltd).title("AMK Veterinary Surgery (2009) Pte Ltd"));
+        LatLng AMK_Veterinary_Surgery_Pte_Ltd = new LatLng(1.411674 , 103.786349);
+        mMap.addMarker(new MarkerOptions().position(AMK_Veterinary_Surgery_Pte_Ltd).title("AMK Veterinary Surgery (2009) Pte Ltd"));
 
         LatLng Edmond_Tan_Veterinary_Surgery = new LatLng(1.369588 , 103.874209);
         mMap.addMarker(new MarkerOptions().position(Edmond_Tan_Veterinary_Surgery).title("Edmond Tan Veterinary Surgery"));
