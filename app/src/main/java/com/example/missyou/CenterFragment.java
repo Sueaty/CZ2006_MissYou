@@ -247,6 +247,29 @@ public class CenterFragment extends Fragment implements OnMapReadyCallback{
         LatLng Amber_Vet = new LatLng( 1.312724, 103.922682);
         mMap.addMarker(new MarkerOptions().position(Amber_Vet).title("Amber Vet"));
 
+        LatLng Republic_Veterinary_Clinic = new LatLng( 1.339672, 103.706525);
+        mMap.addMarker(new MarkerOptions().position(Republic_Veterinary_Clinic).title("Republic Veterinary Clinic"));
+
+        LatLng My_Family_Vet_Clinic_and_Surgery_Pte_Ltd = new LatLng(1.349940 , 103.759971);
+        mMap.addMarker(new MarkerOptions().position(My_Family_Vet_Clinic_and_Surgery_Pte_Ltd).title("My Family Vet Clinic and Surgery Pte Ltd"));
+
+        LatLng Passion_Veterinary_Clinic_Pte_Ltd = new LatLng(1.437843 , 103.782100);
+        mMap.addMarker(new MarkerOptions().position(Passion_Veterinary_Clinic_Pte_Ltd ).title("Passion Veterinary Clinic Pte Ltd"));
+
+        LatLng AMK_Veterinary_Surgery_(2009)_Pte_Ltd = new LatLng(1.411674 , 103.786349);
+        mMap.addMarker(new MarkerOptions().position(AMK_Veterinary_Surgery_(2009)_Pte_Ltd).title("AMK Veterinary Surgery (2009) Pte Ltd"));
+
+        LatLng Edmond_Tan_Veterinary_Surgery = new LatLng(1.369588 , 103.874209);
+        mMap.addMarker(new MarkerOptions().position(Edmond_Tan_Veterinary_Surgery).title("Edmond Tan Veterinary Surgery"));
+
+        LatLng Animal_Infirmary = new LatLng(1.316067 , 103.845057);
+        mMap.addMarker(new MarkerOptions().position(Animal_Infirmary).title("Animal Infirmary"));
+
+        LatLng Clinic_For_Pets = new LatLng(1.319405 , 103.891268);
+        mMap.addMarker(new MarkerOptions().position(Clinic_For_Pets).title("Clinic For Pets"));
+
+        LatLng The_Veterinary_Clinic_At_Tampines_Pte_Ltd = new LatLng(1.426603 , 103.827469);
+        mMap.addMarker(new MarkerOptions().position(The_Veterinary_Clinic_At_Tampines_Pte_Ltd).title("The Veterinary Clinic @ Tampines Pte Ltd"));
     }
 
 
