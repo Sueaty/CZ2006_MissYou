@@ -42,10 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser currentUser;
-    private FloatingActionButton drawer, reportLost, reportFound;
-    private TextView tvLost, tvFound;
-    private Boolean isReportOpen = false;
-
+    private FloatingActionButton drawer;
 
 
     @Override
@@ -66,12 +63,7 @@ public class MainActivity extends AppCompatActivity {
         lostFragment = new LostFragment();
         mapFragment = new CenterFragment();
         settingsFragment = new SettingsFragment();
-
         drawer = findViewById(R.id.floatingActionButton);
-        reportLost = findViewById(R.id.btnLostReport);
-        reportFound = findViewById(R.id.btnFoundReport);
-        tvLost= findViewById(R.id.tvLostReport);
-        tvFound = findViewById(R.id.tvFoundReport);
 
         final AlertDialog.Builder builder
                 = new AlertDialog.Builder(this)
@@ -102,8 +94,10 @@ public class MainActivity extends AppCompatActivity {
                     // code to be executed when single item is selected
                     case R.id.navigation_home :
                         InitializeFragments(homeFragment);
+                        drawer.show();
                         return true;
                     case R.id.navigation_search :
+                        drawer.show();
                         if(currentUser == null){
                             AlertDialog registerAlert = builder.create();
                             registerAlert.show();
@@ -113,9 +107,11 @@ public class MainActivity extends AppCompatActivity {
                         }
                         return true;
                     case R.id.navigation_map:
+                        drawer.hide();
                         InitializeFragments(mapFragment);
                         return true;
                     case R.id.navigation_settings:
+                        drawer.hide();
                         if(currentUser == null){
                             AlertDialog registerAlert = builder.create();
                             registerAlert.show();
@@ -133,13 +129,6 @@ public class MainActivity extends AppCompatActivity {
         drawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                animation();
-            }
-        });
-
-        reportLost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 if (currentUser == null) {
                     AlertDialog registerAlert = builder.create();
                     registerAlert.show();
@@ -147,18 +136,6 @@ public class MainActivity extends AppCompatActivity {
                 else startActivity(new Intent(MainActivity.this, NewPostActivity.class));
             }
         });
-
-        reportFound.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (currentUser == null) {
-                    AlertDialog registerAlert = builder.create();
-                    registerAlert.show();
-                }
-                else startActivity(new Intent(MainActivity.this, NewPostActivity.class));
-            }
-        });
-
     }
 
     private void InitializeFragments(Fragment fragment){
@@ -167,24 +144,4 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit(); // save changes
     }
 
-    private void animation(){
-        if (isReportOpen){
-            reportFound.startAnimation(report_close);
-            reportLost.startAnimation(report_close);
-            tvFound.startAnimation(report_close);
-            tvLost.startAnimation(report_close);
-            reportFound.setClickable(false);
-            reportLost.setClickable(false);
-            isReportOpen = false;
-        }
-        else{
-            reportFound.startAnimation(report_open);
-            reportLost.startAnimation(report_open);
-            tvFound.startAnimation(report_open);
-            tvLost.startAnimation(report_open );
-            reportFound.setClickable(true);
-            reportLost.setClickable(true);
-            isReportOpen = true;
-        }
-    }
 }

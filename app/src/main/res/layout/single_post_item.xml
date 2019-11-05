@@ -15,95 +15,110 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="410dp"
-            android:layout_height="435dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/backgroundpost"
-            android:visibility="visible"
-            >
+            android:visibility="visible">
+
             <ImageView
                 android:id="@+id/profile_pic"
-                android:layout_width="65dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="10dp"
                 android:padding="3dp"
                 android:scaleType="fitCenter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/default_profile_image" />
 
             <TextView
                 android:id="@+id/user_name"
                 android:layout_width="133dp"
-                android:layout_height="34dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="16dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
                 android:text="TextView"
+                android:textSize="20dp"
                 android:textStyle="bold"
-                android:textSize="18dp"
                 app:layout_constraintStart_toEndOf="@+id/profile_pic"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/post_date"
                 android:layout_width="133dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
+                android:layout_height="wrap_content"
 
-                app:layout_constraintStart_toEndOf="@+id/profile_pic"
-                app:layout_constraintTop_toBottomOf="@+id/user_name" />
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Post Date"
+                android:textColor="@color/quantum_black_secondary_text"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@+id/user_name"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/post_img"
-                android:layout_width="409dp"
-                android:layout_height="220dp"
-                android:layout_marginTop="24dp"
+                android:layout_width="357dp"
+                android:layout_height="207dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.19"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_pic"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@android:drawable/ic_menu_report_image" />
 
             <TextView
                 android:id="@+id/post_des"
-                android:layout_width="379dp"
-                android:layout_height="81dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="357dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
                 android:text="TextView"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.575"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/post_img" />
 
             <TextView
                 android:id="@+id/post_hp"
                 android:layout_width="133dp"
-                android:layout_height="34dp"
-                android:layout_marginTop="16dp"
-                android:text="TextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.425"
-                app:layout_constraintStart_toEndOf="@+id/user_name"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Phone #"
+                android:textSize="15sp"
+                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintTop_toBottomOf="@+id/post_img" />
 
             <ImageButton
                 android:id="@+id/toMap"
-                android:layout_width="44dp"
-                android:layout_height="39dp"
-                android:layout_marginStart="310dp"
-                android:layout_marginTop="200dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="459dp"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
                 android:background="#FFF"
                 android:padding="2dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/googlemaps"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/ic_search_24px"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.604"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="5dp"
+                android:text="Contact Information : "
+                android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.539" />
+                app:layout_constraintTop_toBottomOf="@+id/post_img" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

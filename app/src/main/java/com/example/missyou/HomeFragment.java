@@ -4,6 +4,8 @@ package com.example.missyou;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,6 +39,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class HomeFragment extends Fragment {
     private RecyclerView blog_list_view;
     public List<userpost> post_list;
+
     private FirebaseFirestore firebaseFirestore;
     private postRecyclerAdapter PostRecyclerAdapter;
     private FirebaseAuth firebaseAuth;
@@ -50,17 +53,16 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
         post_list = new ArrayList<>();
         blog_list_view = view.findViewById(R.id.blog_list_view);
-       // blog_list_view = getActivity().findViewById(R.id.blog_list_view); //blog_list_view
         firebaseAuth = FirebaseAuth.getInstance();
         PostRecyclerAdapter = new postRecyclerAdapter(post_list);
         blog_list_view.setLayoutManager(new LinearLayoutManager(container.getContext()));  // having  change
         blog_list_view.setAdapter(PostRecyclerAdapter);
-//        blog_list_view.setHasFixedSize(true);
-
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         Query firstQuery = firebaseFirestore.collection("Posts").orderBy("timestamp",Query.Direction.DESCENDING);

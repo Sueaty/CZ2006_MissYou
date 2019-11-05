@@ -49,10 +49,10 @@ public class LostFragment extends Fragment {
     private DocumentSnapshot lastVisible;
     private FirebaseUser currentUser;
     private String currentUserUID;
+
     public LostFragment() {
         // Required empty public constructor
     }
-
 
 
     @Override
@@ -78,7 +78,7 @@ public class LostFragment extends Fragment {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if (e!=null){
-                    Log.d(TAG,"Error:"+e.getMessage());
+                    Log.d(TAG,"Error:" + e.getMessage());
                 }
                 else {
                     if (!queryDocumentSnapshots.isEmpty()) {
@@ -96,9 +96,6 @@ public class LostFragment extends Fragment {
                                 String blogPostId = doc.getDocument().getId();
                                 userpost blogPost = doc.getDocument().toObject(userpost.class);//.withId(blogPostId);
 
-                                // post_list.add(blogPost);
-                                // PostRecyclerAdapter.notifyDataSetChanged();
-
                                 if (isFirstPageFirstLoad) {
 
                                     post_list.add(blogPost);
@@ -109,8 +106,6 @@ public class LostFragment extends Fragment {
                                     post_list.add(0, blogPost);
 
                                 }
-
-
                             }
                         }
                     }

@@ -18,7 +18,7 @@ public class userpost {
     public LatLng loc;
 
 
-    // constractor
+    // constructor
     public userpost(String user_id, String image_url, String desc, String image_thumb, String Phone, double latitude, double longitude, Date timestamp) {
         this.user_id = user_id;
         this.image_url = image_url;
