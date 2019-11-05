@@ -43,6 +43,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.PlaceDetectionClient;
 
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.PlaceDetectionClient;
@@ -93,6 +94,13 @@ public class CenterFragment extends Fragment implements OnMapReadyCallback{
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final String TAG = "CenterFragment";
 
+    public static final CameraPosition SYDNEY =
+            new CameraPosition.Builder().target(new LatLng(-1.290270, 103.851959))
+                    .zoom(15.5f)
+                    .bearing(0)
+                    .tilt(25)
+                    .build();
+
 
     private AutoCompleteTextView mAutocompleteTextView;
 
@@ -109,7 +117,7 @@ public class CenterFragment extends Fragment implements OnMapReadyCallback{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       View v = inflater.inflate(R.layout.fragment_center, container,false);
+        View v = inflater.inflate(R.layout.fragment_center, container,false);
 
         getLocationPermission();
 
@@ -124,9 +132,8 @@ public class CenterFragment extends Fragment implements OnMapReadyCallback{
 
         mAutocompleteTextView = (AutoCompleteTextView) v.findViewById(R.id.places_autocomplete_edit_text);
 
-//build the map
-        SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
-                .findFragmentById(R.id.map);
+        //build the map
+        SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         mGps.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +146,7 @@ public class CenterFragment extends Fragment implements OnMapReadyCallback{
 
         return v;
     }
+
     private void init(){
         Log.d(TAG,"init: initializing");
 
@@ -206,6 +214,8 @@ public class CenterFragment extends Fragment implements OnMapReadyCallback{
     }
 */
 
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Toast.makeText(getActivity(), "Map is ready", Toast.LENGTH_SHORT).show();
@@ -214,13 +224,16 @@ public class CenterFragment extends Fragment implements OnMapReadyCallback{
         if(mLocationPermissionsGranted){
             updateLocationUI();
 
-            getDeviceLocation();
+
+            //getDeviceLocation();
+
 
             mMap.setMyLocationEnabled(true);
             //gonna block location button with searchbar anyway, make it false
             mMap.getUiSettings().setMyLocationButtonEnabled(false);
         //    init();
         }
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(1.367165198, 103.801163462), 10));
 
         // Add a marker in Sydney and move the camera
         LatLng Singapore_Turf_Club_Equine_Hospital = new LatLng(1.422055, 103.764182);
