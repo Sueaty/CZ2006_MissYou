@@ -27,7 +27,7 @@
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="284dp"
+        android:layout_marginTop="316dp"
         android:layout_marginEnd="20dp"
         android:ems="10"
         android:hint="Your Email"
@@ -43,12 +43,13 @@
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
         android:ems="10"
         android:hint="Your Phone"
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/yourEmail" />
 
@@ -58,13 +59,13 @@
         android:layout_height="45dp"
         android:layout_centerVertical="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="4dp"
         android:layout_marginEnd="20dp"
         android:hint="Specify Your Location"
         android:imeOptions="actionSearch"
         android:textColor="#000"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/descriptions" />
 
@@ -74,13 +75,14 @@
         android:layout_width="0dp"
         android:layout_height="152dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="20dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Add more description about your pet"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/yourPhone" />
 
@@ -100,12 +102,12 @@
         android:id="@+id/btnMap"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="52dp"
+
         android:text="Location"
-        app:layout_constraintBottom_toBottomOf="@+id/userLocation"
-        app:layout_constraintEnd_toEndOf="@+id/userLocation"
-        app:layout_constraintTop_toTopOf="@+id/userLocation"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toBottomOf="@id/yourEmail"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

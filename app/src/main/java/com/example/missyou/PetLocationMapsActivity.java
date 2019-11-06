@@ -201,7 +201,6 @@ public class PetLocationMapsActivity extends FragmentActivity implements OnMapRe
     public  double[] geoLocate(){
 
 
-
         String searchString = mSearchText.getText().toString();
         Log.d(TAG,"geoLocate: geolocating");
 
