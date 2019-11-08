@@ -123,13 +123,18 @@ public class  NewPostActivity extends AppCompatActivity{
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         //  mDatabase = FirebaseDatabase.getInstance().getReference();
-
+        newPostImage = findViewById(R.id.newPostImage);
 
         currentUser = firebaseAuth.getCurrentUser();
-        current_user_id = currentUser.getUid();
+
+        if (currentUser != null){
+        current_user_id = currentUser.getUid();}
+        else{
+            Log.d("TAG", "firebaseUser is null");
+        }
 
 
-        newPostImage = findViewById(R.id.newPostImage);
+
 
         //type textview
         //  yourAddress =  findViewById(R.id.yourAddress);

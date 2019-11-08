@@ -181,8 +181,7 @@ public class lostFoundPetsLocationActivity extends FragmentActivity implements O
                         if(task.isSuccessful()){
                             Log.d(TAG, "onComplete: Found location");
                             Location mLastKnownLocation = (Location) task.getResult();
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()),
-                                    DEFAULT_ZOOM));
+                       //     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()),DEFAULT_ZOOM));
 
                             //moveCamera(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()),DEFAULT_ZOOM);
                         }
